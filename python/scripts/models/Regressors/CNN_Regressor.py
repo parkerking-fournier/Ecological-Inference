@@ -5,15 +5,15 @@ from __future__ import print_function
 # Imports
 import numpy as np
 import tensorflow as tf
-import CNN_LSTM_model as cm_lm
+import CNN_Regressor_model as cm
 
 tf.logging.set_verbosity(tf.logging.INFO)
 
 # Training and test sets
-X_TRAINING = "../../../datasets/npy/train_x.npy"
-Y_TRAINING = "../../../datasets/npy/train_y_num_species.npy"
-X_TEST = "../../../datasets/npy/test_x.npy"
-Y_TEST = "../../../datasets/npy/test_y_num_species.npy"
+X_TRAINING = "../../../../datasets/npy/train_x.npy"
+Y_TRAINING = "../../../../datasets/npy/train_y_num_species.npy"
+X_TEST = "../../../../datasets/npy/test_x.npy"
+Y_TEST = "../../../../datasets/npy/test_y_num_species.npy"
 
 # Load files
 print("\nLoading files...")
@@ -26,14 +26,14 @@ test_y = test_y.astype(int)
 print("     Finished!")
 
 # Create the Estimator
-classifier = tf.estimator.Estimator(model_fn=cm_lm.cnn_lstm_model_fn, 
-                                    model_dir="/Users/parkerkingfournier/Documents/University/U4(2017-18)/Summer/ResearchProject/python/scripts/models/logs/cnn_lstm_tmp")
+classifier = tf.estimator.Estimator(model_fn=cm.cnn_model_fn, 
+                                    model_dir="/Users/parkerkingfournier/Documents/University/U4(2017-18)/Summer/ResearchProject/python/scripts/models/logs/regressors/cnn_regressor")
 
 # Set up logging for predictions
-tensors_to_log = {"probabilities": "softmax_tensor"}
+tensors_to_log = {"predictions": "prediction_tensor/BiasAdd"}
 logging_hook = tf.train.LoggingTensorHook(tensors=tensors_to_log, every_n_iter=50)
 
-# Define training and eval inputs
+# Define the training and eval inputs
 train_input_fn = tf.estimator.inputs.numpy_input_fn( 
     x={"x": train_x}, 
     y=train_y, 
@@ -47,9 +47,12 @@ eval_input_fn = tf.estimator.inputs.numpy_input_fn(
     num_epochs=1,
     shuffle=False)
 
-# Train the model
+# Train the Model
 print("\nTraining model...\n")
-classifier.train( input_fn=train_input_fn, steps=200, hooks=[logging_hook])
+classifier.train( 
+    input_fn=train_input_fn, 
+    steps=200,
+    hooks=[logging_hook])
 print("     Finished!\n")
 
 # Evaluate the model and print results

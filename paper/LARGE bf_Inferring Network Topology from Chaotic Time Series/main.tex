@@ -75,17 +75,17 @@ chaos theory, chaotic attractors, convolutional neural networks, deep neural net
 \section{PROBLEM DESCRIPTION}
 \begin{figure}
   \centering
-  \subfloat[A trajectory in the ZYX phase space showing the presence of chaos.]{\label{ref_label1}\includegraphics[width=0.5\textwidth]{zyx.png}}\\
-  \subfloat[A trajectory in the YXC phase space showing the presence of chaos.]{\label{ref_label2}\includegraphics[width=0.5\textwidth]{yxc.png}}\\
-  \subfloat[A trajectory in the XCP phase space showing the presence of chaos.]{\label{ref_label3}\includegraphics[width=0.5\textwidth]{xcp.png}}\\
-  \caption{\label{ref_label_overall}Phase space trajectories for a 5 species chain. Z represents the apex predator of the chain, Y is predated by Z, X is predated by Y, C is predated by X and P is predated by C. Trajectories show the presence of chaos in the models used to generate the data sets.}
+  \subfloat[]{\label{ref_label1}\includegraphics[width=0.5\textwidth]{zyx.png}}\\
+  \subfloat[]{\label{ref_label2}\includegraphics[width=0.5\textwidth]{yxc.png}}\\
+  \subfloat[]{\label{ref_label3}\includegraphics[width=0.5\textwidth]{xcp.png}}\\
+  \caption{\label{ref_label_overall}Phase space trajectories for a 5 species chain. Z represents the apex predator of the chain, Y is predated by Z, X is predated by Y, C is predated by X and P is predated by C. Trajectories appear to orbit strange attractors and visualize the presence of chaos in the models used to generate the datasets.}
 \end{figure}
 
 	The goal of the research presented was to attempt to infer characteristics of the underlying food web topology of a system given a population single time series. Originally the aim was to generate the underlying topology after observing a time series, however it became clear early on that this approach was too broad. To narrow the scope the number of topologies considered was limited to eight different network structures. 
     
     Using preexisting ecologic models these topologies were used to generate chaotic time series that were stored in a data set containing points of the form \textit{(X , Y)}, where \textit{X} is the time series of a single species and \textit{Y} is the food web topology that generated \textit{X}.
     
-    To further understand the difference between topologies, this original data set was relabeled and stored into a new data set of the form \textit{(X , Y')}, where \textit{X} is the time series of a single species and \textit{Y} is the number of species in the topology that generated \textit{X}. Additionally, a data set was created for each class \textit{y} $\epsilon$ \textit{Y'}. These sets were stored in the same format as the previously mentioned data sets. A more rigorous description of the data sets is below. 
+    To further understand the difference between topologies, this original data set was relabeled and stored into a new data set of the form \textit{(X , Y')}, where \textit{X} is the time series of a single species and \textit{Y} is the number of species in the topology that generated \textit{X}. Additionally, a data set was created for each class \textit{y} $\epsilon$ \textit{Y'}. These sets were stored in the same format as the previously mentioned datasets. A more rigorous description of the datasets is below. 
     
     After creating the datasets, three classification algorithms were trained on each data set, and the highest accuracy for each were recorded. The classification algorithms used represented a variety of approaches to classification: specifically these algorithms were a Deep Neural Network (DNN), Convolutional Neural Network (CNN), and a Convolutional - Long Short Term Memory Network (CNN-LSTM). 
     
@@ -174,7 +174,7 @@ chaos theory, chaotic attractors, convolutional neural networks, deep neural net
   \end{tabular}
 \end{table}
 
-	For the creation of the data sets used the models described in by Fussman and Heber in \textit{"Food web complexity and chaotic population dynamics"} were adopted (Fussman \& Heber, 2002). To limit the number of classes, only the eight topologies demonstrating the highest amount of chaos were used (Table 1). While evaluating these models all parameter values were kept consistent to those used by Fussman and Heber in order to ensure that the time series generated would be similarly consistent. For the convenience of the reader the general form of the differential equations describing the food web in Fig. 2 are presented:
+	For the creation of the datasets used the models described in by Fussman and Heber in \textit{"Food web complexity and chaotic population dynamics"} were adopted (Fussman \& Heber, 2002). To limit the number of classes, only the eight topologies demonstrating the highest amount of chaos were used (Table 1). While evaluating these models all parameter values were kept consistent to those used by Fussman and Heber in order to ensure that the time series generated would be similarly consistent. For the convenience of the reader the general form of the differential equations describing the food web in Fig. 2 are presented:
     
 \begin{multline}
 	\frac{dP_i}{dt} =
@@ -222,26 +222,32 @@ chaos theory, chaotic attractors, convolutional neural networks, deep neural net
 The food web topologies and differential equations shown were found to exhibit chaotic dynamics for certain parameter settings. Figure 1 shows different visualizations of one phase space trajectory of the most chaotic network topology, the chain of length 5. 
 
 \subsection{Datasets}
-A total of 5 data sets were created. Of these five data sets four are subsets of the original data set, denoted \textit{D}. The relationship of these data sets to one another is shown in Figure 2. \textit{D} was created by holding all parameter values constant except for the mortality rates \textit{d\textsubscript{C\textsubscript{i}}}, \textit{d\textsubscript{Y}}, \textit{d\textsubscript{Y}}, and \textit{d\textsubscript{Z}}. The n-dimensional space of mortality rates was traversed (Table 2), evaluating the differential equations (1) through (5) 200,000 time steps for each parameter combination, and omitting the first 50,232 time steps to remove any trajectories not on an attractor. Following Fussman and Heber (Fussman \& Heber, 2002), the resulting time series of length 149769, denoted \textit{x}, was recorded only if every species in the network "survived". This was carried out by only recording time series for which all species populations were greater than the threshold value $\varepsilon$ = 10\textsuperscript{-9} at time \textit{t} = 200,000. 
+A total of 5 datasets were created. Of these five datasets four are subsets of the original data set, denoted \textit{D}. The relationship of these datasets to one another is shown in Figure 2. \textit{D} was created by holding all parameter values constant except for the mortality rates \textit{d\textsubscript{C\textsubscript{i}}}, \textit{d\textsubscript{Y}}, \textit{d\textsubscript{Y}}, and \textit{d\textsubscript{Z}}. The n-dimensional space of mortality rates was traversed (Table 2), evaluating the differential equations (1) through (5) 200,000 time steps for each parameter combination, and omitting the first 50,232 time steps to remove initial transient behaviour of the system. Following Fussman and Heber (Fussman \& Heber, 2002), the resulting time series of length 149769, denoted \textit{x}, was recorded only if every species in the network "survived". This was carried out by only recording time series for which all species populations were greater than the threshold value $\varepsilon$ = 10\textsuperscript{-9} at time \textit{t} = 200,000. 
 
-\textit{D} thus has the form \textit{(\textbf{X}, \textbf{Y})}, where \textit{\textbf{X}} is a vector of time series and \textit{\textbf{Y}} is a vector of labels such that each \textit{x} $\epsilon$ \textit{\textbf{X}} was generated by evaluating equations (1) through (5) corresponding to topology \textit{y} $\epsilon$ \textit{\textbf{Y}}. From \textit{D}, four data sets were created. The first, \textit{D\textsubscript{N}}, is of the form \textit{(\textbf{X}\textsubscript{N}, \textbf{Y}\textsubscript{N})}, where \textit{\textbf{X}\textsubscript{N}} = \textit{\textbf{X}} and each \textit{\textbf{Y}\textsubscript{Ni}} $\epsilon$ \textit{\textbf{Y}\textsubscript{N}} is a class corresponding to the number of species in topology \textit{y} $\epsilon$ \textit{\textbf{Y}}. From \textit{D\textsubscript{N}} three data sets,  \textit{D\textsubscript{3}}, \textit{D\textsubscript{4}} and \textit{D\textsubscript{5}}, were created: for each \textit{D\textsubscript{i}}, \textit{i} = 1, 2, 3, data points \textit{(x, y)} $\epsilon$ \textit{(\textbf{X}, \textbf{Y})} were recorded if \textit{y} was a topology with \textit{i} species. 
+\textit{D} thus has the form \textit{(\textbf{X}, \textbf{Y})}, where \textit{\textbf{X}} is a vector of time series and \textit{\textbf{Y}} is a vector of labels such that each \textit{x} $\epsilon$ \textit{\textbf{X}} was generated by evaluating equations (1) through (5) corresponding to topology \textit{y} $\epsilon$ \textit{\textbf{Y}}, where \textit{\textbf{Y}} contains the topologies in Table 1. From \textit{D}, four datasets were created. The first, \textit{D\textsubscript{N}}, is of the form \textit{(\textbf{X}\textsubscript{N}, \textbf{Y}\textsubscript{N})}, where \textit{\textbf{X}\textsubscript{N}} = \textit{\textbf{X}} and each \textit{\textbf{Y}\textsubscript{Ni}} $\epsilon$ \textit{\textbf{Y}\textsubscript{N}} is a class corresponding to the number of species in topology \textit{y} $\epsilon$ \textit{\textbf{Y}}. Since the topologies in Table 1 contain between 3 and 5 species, this means that \textit{D\textsubscript{N}} contains only 3 classes. 
 
-	These five data sets can be understood as a tree, shown in Figure 1. \textit{D} is used to determine which of the eight topologies \textit{y} $\epsilon$ \textit{\textbf{Y}} generated a given time series \textit{x} $\epsilon$ \textit{\textbf{X}}. Set \textit{D\textsubscript{N}} reduces the number of classes by only distinguishing each time series by the number of species in the generating network. Once \textit{D\textsubscript{N}} is used to narrow down possible topologies \textit{D\textsubscript{3}}, \textit{D\textsubscript{4}} and \textit{D\textsubscript{5}} can be used to differentiate between topologies with the same number of species. 
-    
+Each of the three classes in \textit{D\textsubscript{N}} contain time series data generated from more than one of the topologies in Table 1. For example, the class "3" in \textit{D\textsubscript{N}}, corresponding to time series generated from topologies with 3 species, contains time series data generated from topologies A2 and A3. \textit{D\textsubscript{N}} was further partitioned into \textit{D\textsubscript{3}}, \textit{D\textsubscript{4}} and \textit{D\textsubscript{5}}, where each \textit{D\textsubscript{i}}, \textit{i} = 1, 2, 3, contains data \textit{x} $\epsilon$ \textit{\textbf{X}} generated from topology \textit{y} having \textit{i} species. 
+
+The relationship of these datasets can be understood as trees, shown in Figure 1. \textit{D} is used to determine which of the eight topologies \textit{y} $\epsilon$ \textit{\textbf{Y}} generated a given time series \textit{x} $\epsilon$ \textit{\textbf{X}} and answers the question \textit{From which network topology was a given time series generated?} Set \textit{D\textsubscript{N}} reduces the number of classes by only distinguishing each time series by the number of species in the generating network. \textit{D\textsubscript{N}} provides answers to the question \textit{How many species are in the network from which a time series was generated?} Once \textit{D\textsubscript{N}} is used to answer this question \textit{D\textsubscript{3}}, \textit{D\textsubscript{4}} and \textit{D\textsubscript{5}} can be used to differentiate between topologies with the same number of species, ultimately providing an answer to the same question that is asked by dataset \textit{D}.
+
+This partitioning of the \textit{D} was computationally and ecologically motivated. Computationally \textit{D\textsubscript{N}}, \textit{D\textsubscript{3}}, \textit{D\textsubscript{4}} and \textit{D\textsubscript{5}} reduce the complexity of the classification by reducing the number of classes. Inferring the generating topology only using dataset \textit{D} requires classifying the data into one of 8 classes, whereas using \textit{D\textsubscript{N}}, \textit{D\textsubscript{3}}, \textit{D\textsubscript{4}} and \textit{D\textsubscript{5}} to do the same prediction requires classifying the data into one of at most 4 classes.
+
+In the field of ecology, the exact number of species in an environment is often known: in this case there would be no need of datasets \textit{D} or \textit{D\textsubscript{N}} and the challenge of classification would be significantly reduced. 
+
 \begin{figure}
 	\centering
 	\tikzstyle{every node}=[circle, draw, fill=gray,
                         inner sep=0pt, minimum width=18pt]
     \begin{tikzpicture}[thick,scale=0.8]
    		\node at (0.0,1) [circle,draw] (a) {\textit{D}};
-        \node at (-3.5,-1.5) [circle,draw] (b) {A1};
-        \node at (-2.5,-1.5) [circle,draw] (c) {A2};
-        \node at (-1.5,-1.5) [circle,draw] (d) {A3};
-        \node at (-0.5,-1.5) [circle,draw] (e) {A4};
-        \node at (0.5,-1.5) [circle,draw] (f) {B1};
-        \node at (1.5,-1.5) [circle,draw] (g) {B2};
-        \node at (2.5,-1.5) [circle,draw] (h) {B3};
-        \node at (3.5,-1.5) [circle,draw] (i) {B4};
+        \node at (-3.5,-1.5) [circle,draw,fill=white] (b) {A1};
+        \node at (-2.5,-1.5) [circle,draw,fill=white] (c) {A2};
+        \node at (-1.5,-1.5) [circle,draw,fill=white] (d) {A3};
+        \node at (-0.5,-1.5) [circle,draw,fill=white] (e) {A4};
+        \node at (0.5,-1.5) [circle,draw,fill=white] (f) {B1};
+        \node at (1.5,-1.5) [circle,draw,fill=white] (g) {B2};
+        \node at (2.5,-1.5) [circle,draw,fill=white] (h) {B3};
+        \node at (3.5,-1.5) [circle,draw,fill=white] (i) {B4};
         \draw (a) -- (b) (a) -- (c) (a) -- (d) (a) -- (e) (a) -- (f) (a) -- (g) (a) -- (h) (a) -- (i);
     \end{tikzpicture}
 \end{figure}    
@@ -257,17 +263,17 @@ A total of 5 data sets were created. Of these five data sets four are subsets of
         \node at (-1,-1) [circle,draw] (c) {\textit{D\textsubscript{4}}};
         \node at (2,-1) [circle,draw] (d) {\textit{D\textsubscript{5}}};
         
-        \node at (-3.5,-3) [circle,draw] (e) {A2};
-        \node at (-2.5,-3) [circle,draw] (f) {A3};
-        \node at (-1.5,-3) [circle,draw] (g) {B1};
-        \node at (-0.5,-3) [circle,draw] (h) {B2};
-        \node at (0.5,-3) [circle,draw] (i) {A1};
-        \node at (1.5,-3) [circle,draw] (j) {B3};
-        \node at (2.5,-3) [circle,draw] (k) {A4};
-        \node at (3.5,-3) [circle,draw] (l) {B4};
+        \node at (-3.5,-3) [circle,draw,fill=white] (e) {A2};
+        \node at (-2.5,-3) [circle,draw,fill=white] (f) {A3};
+        \node at (-1.5,-3) [circle,draw,fill=white] (g) {B1};
+        \node at (-0.5,-3) [circle,draw,fill=white] (h) {B2};
+        \node at (0.5,-3) [circle,draw,fill=white] (i) {A1};
+        \node at (1.5,-3) [circle,draw,fill=white] (j) {B3};
+        \node at (2.5,-3) [circle,draw,fill=white] (k) {A4};
+        \node at (3.5,-3) [circle,draw,fill=white] (l) {B4};
         \draw (a) -- (b) (a) -- (c) (a) -- (d) (b) -- (e) (b) -- (f) (c) -- (g) (c) -- (h) (d) -- (i) (d) -- (j) (d) -- (k) (d) -- (l);
         \end{tikzpicture}
-        \caption{The partitioning of data into different sets. The top tree shows data set \textit{D} as the root node, with each topology as the leaves. The bottom tree shows the relationship of \textit{D\textsubscript{3}}, \textit{D\textsubscript{4}} and \textit{D\textsubscript{5}} as subsets of \textit{D\textsubscript{N}}, with \textit{D\textsubscript{N}} being the root and each topology as the leaves}
+        \caption{The partitioning of data into different sets. The top tree shows data set \textit{D} as the root node, with topologies as the leaves. The bottom tree shows the relationship of \textit{D\textsubscript{3}}, \textit{D\textsubscript{4}} and \textit{D\textsubscript{5}} as subsets of \textit{D\textsubscript{N}}, with \textit{D\textsubscript{N}} being the root and topologies as the leaves}
 \end{figure}
 
 
@@ -289,7 +295,7 @@ A total of 5 data sets were created. Of these five data sets four are subsets of
 
 
 \subsection{Classification Models}
-	To classify the time series data three Machine Learning algorithms were trained and tested on the data sets described above. These algorithms, specifically a DNN, a CNN and a CNN-LSTM, were chosen because of their differences in network complexity, with the DNN being the most simple and the CNN-LSTM being the most complex, and because each possesses strengths and weaknesses in relation to certain types of data. The difference in how each algorithm performs may express some hidden trait of the ecological networks used to generate the data sets. A description of the architecture of each algorithm follows.
+	To classify the time series data three Machine Learning algorithms were trained and tested on the datasets described above. These algorithms, specifically a DNN, a CNN and a CNN-LSTM, were chosen because of their differences in network complexity, with the DNN being the most simple and the CNN-LSTM being the most complex, and because each possesses strengths and weaknesses in relation to certain types of data. The difference in how each algorithm performs may express some hidden trait of the ecological networks used to generate the datasets. A description of the architecture of each algorithm follows.
     
     The architecture of the DNN is a rather straightforward architecture, and was chosen to act as a pseudo baseline as DNNs are a standard first approach in most Machine Learning applications. The specific architecture featured an input layer of size 149769, followed by five hidden layers of size 50 each, with the output layer having a size equal to the number of classes in data set used. For example, if the DNN were trained and evaluated on \textit{D} the output layer would have size 8 (Fig. 3). To combat overfitting a dropout rate of 0.5 was used while training the network. 
     
@@ -299,7 +305,7 @@ A total of 5 data sets were created. Of these five data sets four are subsets of
     
     The CNN used utilized one-dimensional convolutions on the input to extract such features. Specifically, the architecture had an input layer of size 149769, followed by 5 hidden convolutional layers, each followed by a max pooling layer, and one fully connected layer wit a dropout rate of 0.5. This was followed by the final layer having again a size equal to the number of classes in the data set used. A complete diagram of the CNN is shown in Figure 4. 
     
-    Lastly, the CNN-LSTM was chosen do to its high model complexity. LSTMs are know to excel in learning from sequential data (Graves \& Jurgen Schmidhuber, 2005), and are robust against problems of long term dependency. Because of this, the CNN-LSTM was chosen as the so-called heavy hitter of the classification algorithms. This architecture represents the combination of two pre existing architectures: it uses a series of one-dimensional convolutions which then pass the data into a LSTM layer (Fig. 5) . Finally the data is passed from the LSTM cell to a fully connected layer with a dropout rate of 0.5 and to an output layer similar to those above. 
+    Lastly, the CNN-LSTM was chosen due to its high model complexity. LSTMs are know to excel in learning from sequential data (Graves \& Jurgen Schmidhuber, 2005), and are robust against problems of long term dependency. Because of this, the CNN-LSTM was chosen as the so-called heavy hitter of the classification algorithms. This architecture represents the combination of two preexisting architectures: it uses a series of one-dimensional convolutions which then pass the data into a LSTM layer (Fig. 5). Finally the data is passed from the LSTM cell to a fully connected layer with a dropout rate of 0.5 and to an output layer similar to those above. 
  
 \begin{figure}
 	\centering
@@ -322,11 +328,11 @@ A total of 5 data sets were created. Of these five data sets four are subsets of
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{METHODS}
 \subsection{Dataset Creation}
-	All data sets constructed using the ecological models above implemented in python. To approximate the integration of equations (1) through (5) the following form was used:
+	All datasets constructed using the ecological models above implemented in python. To approximate the integration of equations (1) through (5) the following form was used:
 \begin{equation}x_{t+1} = x_{t} + f(x_{t})dt\end{equation}
 where \textit{x\textsubscript{t}} represents the population of species \textit{x} at time \textit{t}, \textit{f($\cdot$)} is an ecological model (Equations (1) through (5)), and \textit{dt} is approximated as 0.01. 
 	
-    After the data sets were created, every fourth entry was withheld from training to be used in a validation set. This resulted in training and test sets that possessed identical class distributions which will be a focus of later discussion.
+    After the datasets were created, every fourth entry was withheld from training to be used in a validation set. This resulted in training and test sets that possessed identical class distributions which will be a focus of later discussion.
 
 \subsection{Classification Models}
 	The classification models used were implemented in Python, using existing TensorFlow packages for DNNs, CNNs, and LSTMs. For all the models parameters were initialized randomly and a Rectified Linear Unit (ReLu) activation function was used. For the networks containing convolutional layers same padding was used, and filters were initialized according to a random normal distribution with $\mu$ = 0 and $\sigma$ = 0.05. A learning rate of 0.001 was used for all algorithms. 
@@ -335,12 +341,12 @@ where \textit{x\textsubscript{t}} represents the population of species \textit{x
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{RESULTS}
-	After training each algorithm and recording the results it became clear that a positive correlation between algorithm complexity and accuracy was present. For the majority of data sets the CNN-LSTM performed significantly better than the more simple classification models (Table 3).
+	After training each algorithm and recording the results it became clear that a positive correlation between algorithm complexity and accuracy was present. For the majority of datasets the CNN-LSTM performed significantly better than the more simple classification models (Table 3).
 	
-    Before discussing the implications of the results, it is important to draw attention to certain patterns within the results. Firstly, it should be noted that on data set \textit{D} there is a very slight negative correlation between algorithm complexity and accuracy. Despite this, we see that the difference in accuracies on data set \textit{D} are considerably smaller than those in the other data sets. Second, one should attend to the results pertaining to data set \textit{D\textsubscript{5}} where all algorithms performed identically. Both of these patterns seem to conflict with the stronger correlation present when the algorithms were training on data sets \textit{D\textsubscript{N}}, \textit{D\textsubscript{3}} or \textit{D\textsubscript{4}} and will comprise much of the following discussion section. 
+    Before discussing the implications of the results, it is important to draw attention to certain patterns within the results. Firstly, it should be noted that on data set \textit{D} there is a very slight negative correlation between algorithm complexity and accuracy. Despite this, we see that the difference in accuracies on data set \textit{D} are considerably smaller than those in the other datasets. Second, one should attend to the results pertaining to data set \textit{D\textsubscript{5}} where all algorithms performed identically. Both of these patterns seem to conflict with the stronger correlation present when the algorithms were training on datasets \textit{D\textsubscript{N}}, \textit{D\textsubscript{3}} or \textit{D\textsubscript{4}} and will comprise much of the following discussion section. 
 
 \begin{table}
-\caption{Accuracy of Classification Models on Data Sets}
+\caption{Accuracy of Classification Models on datasets}
 \setlength{\tabcolsep}{5mm} % separator between columns
 \def\arraystretch{1.25} % vertical stretch factor
 \centering
@@ -360,17 +366,17 @@ where \textit{x\textsubscript{t}} represents the population of species \textit{x
 \section{DISCUSSION}
 	The results presented in the previous section are thought provoking as well as enlightening. An almost universal trend is seen where the complexity of the model directly correlates with its ability to classify chaotic time series into topologies that generated them. This will allow further research to focus efforts on models that are more successful at interpreting chaotic population data. 
    
-   Figure 6 shows the time series of one species' population generated from the ecological models explained above. At first glance, this data appears to be somewhat cyclic, with similarly shaped spikes occurring at regular intervals. However, the astute observer will notice that the peak of each spike is slightly different and that the spacing between spikes is not uniform. This holds true for all spikes, as well as similarly shaped spikes. These observations provide an explanation for the increased accuracy in the CNN and CNN-LSTM. CNNs are known to be \textit{shift invariant}, meaning they can learn features in data that are shifted an arbitrary amount in a given sample (Norouzi et al., 2009). This property applies directly to the data sets supplied as the nonuniform spacing between spikes can be understood as random shifts in the time series. Alternatively, one can imagine that the CNN is learning features that correspond to unique spike shapes, disregarding the frequency at which these spikes appear, and using this distinct spike shape to classify time series.
+   Figure 6 shows the time series of one species' population generated from the ecological models explained above. At first glance, this data appears to be somewhat cyclic, with similarly shaped spikes occurring at regular intervals. However, the astute observer will notice that the peak of each spike is slightly different and that the spacing between spikes is not uniform. This holds true for all spikes, as well as similarly shaped spikes. These observations provide an explanation for the increased accuracy in the CNN and CNN-LSTM. CNNs are known to be \textit{shift invariant}, meaning they can learn features in data that are shifted an arbitrary amount in a given sample (Norouzi et al., 2009). This property applies directly to the datasets supplied as the nonuniform spacing between spikes can be understood as random shifts in the time series. Alternatively, one can imagine that the CNN is learning features that correspond to unique spike shapes, disregarding the frequency at which these spikes appear, and using this distinct spike shape to classify time series.
    
    Because the CNN-LSTM is comprised partially of a CNN it must share the same benefits as a CNN. The increased performance in the CNN-LSTM can again be explained by known properties of LSTM cells. LSTMs are known to excel at problems that feature long term dependencies, or events which occur at unkown intervals (Lipton \& Berkowitz, 2015). Because of this, one can intuit that random shifts in spikes in a time series may cause a CNN to under perform in comparison to a CNN-LSTM due to the unknown separation between spike events. Since the CNN-LSTM is comprised of convolutional layers followed by an LSTM cell one can think of the classifier as first extracting features using convolutions, then addressing the random spacing between them by passing the resulting features to an LSTM cell. 
 
-		Special attention should be paid to the data sets \textit{D} and \textit{D\textsubscript{5}} which do \textit{not} show the more complex classifiers performing better. Unsurprisingly, \textit{D} remained the least classifiable of the data sets. This could be explained by the fact that this set contained the greatest amount of classes. Considering Table 3, it is seen that all classifiers perform significantly better than a baseline estimator, but reach approximately the same accuracy. Because of the minimal difference between performances, it is hypothesized that \textit{D} is not completely classifiable. This apparent similarity between chaotic dynamics of different topologies may be explained by looking strictly at the topologies themselves. Consider topology A1, the five species chain. Topologies B1 (the four species chain), and A2 (the three species chain) are subgraphs of A1: it may be possible that the chaotic dynamics created from A1 may also be created from B1 or A2. If this were true then those dynamics stem from multiple topologies would be unclassifiable. Similary, one can see that topology A2 is a subgraph of every other topology, potentially contributing to the classifiability of the data set. 
+		Special attention should be paid to the datasets \textit{D} and \textit{D\textsubscript{5}} which do \textit{not} show the more complex classifiers performing better. Unsurprisingly, \textit{D} remained the least classifiable of the datasets. This could be explained by the fact that this set contained the greatest amount of classes. Considering Table 3, it is seen that all classifiers perform significantly better than a baseline estimator, but reach approximately the same accuracy. Because of the minimal difference between performances, it is hypothesized that \textit{D} is not completely classifiable. This apparent similarity between chaotic dynamics of different topologies may be explained by looking strictly at the topologies themselves. Consider topology A1, the five species chain. Topologies B1 (the four species chain), and A2 (the three species chain) are subgraphs of A1: it may be possible that the chaotic dynamics created from A1 may also be created from B1 or A2. If this were true then those dynamics stem from multiple topologies would be unclassifiable. Similary, one can see that topology A2 is a subgraph of every other topology, potentially contributing to the classifiability of the data set. 
         
         The data set \textit{D\textit{5}} presents a different phenomenon. The accuracy of each algorithm was identical; furthermore the accuracy of each algorithm was exactly that of a baseline classifier. That is to say that each algorithm simply learned to guess the most common class in the data set \textit{D\textit{5}}. Table 4 shows the class distribution of each data set. From this one can see that the most common class in \textit{D\textit{5}} comprised 80\% of the data points. While this may be underwhelming in regards to the learning capabilites of the algorithms, it may be important in regards to the ecological models.  
         
         Fussman and Heber showed that topology A1 possessed the highest percentage of chaotic parameters of all topologies they tested. Unsurprisingly, the class representing 80\% of data set \textit{D\textit{5}} was none other than topology A1. The nonuniformity in the distribution of classes in \textit{D\textit{5}} matches the findings of Fussman and Heber and may be more useful than any fancy Machine Learning Algorithm. Because a 5 species chain is so chaotic, it may be useful to know that chaotic dynamics found in a five species system most likely come from a chain of five species. Furthermore, the inability of all algorithms to classify chaotic time series generated from topologies of five species with more success than a baseline classifier may indicate that the time series themselves are nearly identical. 
         
-        Data sets \textit{D} and \textit{D\textit{5}} are particularly helpful in defining future research in the topic of chaotic time series classification. Future work may include creating an analogue to \textit{D\textit{5}} which features a more even class distribution, or removing the topology A1 from the data set entirely to distunguish topologies of similar levels of chaos. 
+        datasets \textit{D} and \textit{D\textit{5}} are particularly helpful in defining future research in the topic of chaotic time series classification. Future work may include creating an analogue to \textit{D\textit{5}} which features a more even class distribution, or removing the topology A1 from the data set entirely to distunguish topologies of similar levels of chaos. 
         
         To test the similarity of time series generated by topologies, the visualization of attractors from these topologies would be extremely helpful. If attractors look similar it would provide evidence that \textit{D} is indeed impossible to classify perfectly. 
         
@@ -382,7 +388,7 @@ where \textit{x\textsubscript{t}} represents the population of species \textit{x
 \end{figure} 
 
 \begin{table}
-\caption{Class Distribution of Data Sets}
+\caption{Class Distribution of datasets}
 \setlength{\tabcolsep}{5mm} % separator between columns
 \def\arraystretch{1.25} % vertical stretch factor
 \centering

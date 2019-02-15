@@ -1,0 +1,9 @@
+0 	-	five species chain 			-	A1	-	L/S: 0.8		-	Connectance: 0.16		-	Characteristic Length: 2.0
+2	-	three species chain			-	A2	-	L/S: 0.66666	-	Connectance: 0.22222	-	Characteristic Length: 1.33333
+3	-	tritrophic omnivory	A		-	A3	-	L/S: 1.0		-	Connectance: 0.33333	-	Characteristic Length: 1.0
+6	-	tritrophic partial omnivory	-	A4	-	L/S: 1.4		-	Connectance: 0.28		-	Characteristic Length: 1.3
+
+1	-	four species chain			-	B1	-	L/S: 0.75		-	Connectance: 0.1875		-	Characteristic Length: 1.66666
+4	-	tritrophic omnivory B 		-	B2	-	L/S: 1.25		-	Connectance: 0.3125		-	Characteristic Length: 1.16666
+5	-	tritrophic omnivory C 		- 	B3	-	L/S: 1.6		-	Connectance: 0.32		-	Characteristic Length: 1.2
+7	-	tritrophic no omnivory		-	B4	-	L/S: 1.2		-	Connectance: 0.24		-	Characteristic Length: 1.4

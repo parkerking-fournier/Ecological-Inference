@@ -6,10 +6,10 @@ import tensorflow as tf
 import numpy as np
 
 # Training and test sets
-X_TRAINING = "../../../../datasets/npy/train_x.npy"
-Y_TRAINING = "../../../../datasets/npy/train_y_num_species.npy"
-X_TEST = "../../../../datasets/npy/test_x.npy"
-Y_TEST = "../../../../datasets/npy/test_y_num_species.npy"
+X_TRAINING = "../../../../datasets/npy/train/x/train_x.npy"
+Y_TRAINING = "../../../../datasets/npy/train/y/regression/train_y_links_per_species.npy"
+X_TEST = "../../../../datasets/npy/test/x/test_x.npy"
+Y_TEST= "../../../../datasets/npy/test/y/regression/test_y_links_per_species.npy"
 
 # Load files
 print("Loading files...")
@@ -27,22 +27,22 @@ feature_columns = [tf.feature_column.numeric_column("x", shape=[149769])]
 # Build 5 layer DNN with 50, 50, 50, 50, 50 units respectively.
 classifier = tf.estimator.DNNRegressor( feature_columns=feature_columns,
                                         hidden_units=[50, 50, 50, 50, 50],
-                                        model_dir="/Users/parkerkingfournier/Documents/University/U4(2017-18)/Summer/ResearchProject/python/scripts/models/logs/regressors/dnn_regressor",
+                                        model_dir="/Users/parkerkingfournier/Documents/Development/workspace/projects/Ecological-Inference/python/scripts/models/Regressors/logs/dnn_links_per_species",
                                         dropout=0.5)
 
 # Define the training and eval inputs
 train_input_fn = tf.estimator.inputs.numpy_input_fn(
-    x = {"x": train_x},
-    y = train_y,
-    batch_size = 50,
-    num_epochs = None,
-    shuffle = True)
+    x={"x": train_x},
+    y=train_y,
+    batch_size=50,
+    num_epochs=None,
+    shuffle=True)
 
 test_input_fn = tf.estimator.inputs.numpy_input_fn(
-    x = {"x": test_x},
-    y = test_y,
-    num_epochs = 1,
-    shuffle = False)
+    x={"x": test_x},
+    y=test_y,
+    num_epochs=1,
+    shuffle=False)
 
 # Train model.
 print("\nTraining model...")
@@ -51,12 +51,12 @@ print("     Finished!")
 
 # Evaluate accuracy.
 print("\nTesting model...")
-accuracy_score = classifier.evaluate(input_fn=test_input_fn, steps=None)
+eval_result = classifier.evaluate(input_fn=test_input_fn, steps=None)
 print("     Finished!")
 
 print()
 
-for key, value in accuracy_score.iteritems() :
-    print (key, value)
+mse = eval_result["average_loss"]
+print("Mean Squared Error: ", mse)
 
 print()

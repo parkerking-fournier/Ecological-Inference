@@ -1,0 +1,18 @@
+Characteristic Path Length
+
+
+
+
+Connectance
+
+
+
+
+Links Per
+
+0.34467283
+0.15145993
+0.18044214
+0.19753522
+0.16363376
+0.15752257

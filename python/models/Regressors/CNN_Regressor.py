@@ -10,10 +10,10 @@ import CNN_Regressor_model as cm
 tf.logging.set_verbosity(tf.logging.INFO)
 
 # Training and test sets
-X_TRAINING = "../../../../datasets/npy/train/x/train_x.npy"
-Y_TRAINING = "../../../../datasets/npy/train/y/regression/train_y_links_per_species.npy"
-X_TEST = "../../../../datasets/npy/test/x/test_x.npy"
-Y_TEST= "../../../../datasets/npy/test/y/regression/test_y_links_per_species.npy"
+X_TRAINING = "../../../datasets/npy/train/x/train_x.npy"
+Y_TRAINING = "../../../datasets/npy/train/y/regression/train_y_characteristic_length.npy"
+X_TEST = "../../../datasets/npy/test/x/test_x.npy"
+Y_TEST= "../../../datasets/npy/test/y/regression/test_y_characteristic_length.npy"
 
 # Load files
 print("\nLoading files...")
@@ -27,7 +27,7 @@ print("     Finished!")
 
 # Create the Estimator
 classifier = tf.estimator.Estimator(model_fn=cm.cnn_model_fn, 
-                                    model_dir="/Users/parkerkingfournier/Documents/Development/workspace/projects/Ecological-Inference/python/scripts/models/Regressors/logs/cnn_links_per_species")
+                                    model_dir="/Users/parkerkingfournier/Documents/Development/workspace/projects/Ecological-Inference/python/models/Regressors/logs/cnn_characteristic_length")
 
 # Set up logging for predictions
 tensors_to_log = {"predictions": "prediction_tensor/BiasAdd"}

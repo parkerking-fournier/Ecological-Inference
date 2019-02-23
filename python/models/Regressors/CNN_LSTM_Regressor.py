@@ -10,10 +10,10 @@ import CNN_LSTM_Regressor_model as cm_lm
 tf.logging.set_verbosity(tf.logging.INFO)
 
 # Training and test sets
-X_TRAINING = "../../../../datasets/npy/train_x.npy"
-Y_TRAINING = "../../../../datasets/npy/train_y_num_species.npy"
-X_TEST = "../../../../datasets/npy/test_x.npy"
-Y_TEST = "../../../../datasets/npy/test_y_num_species.npy"
+X_TRAINING = "../../../datasets/npy/train/x/train_x.npy"
+Y_TRAINING = "../../../datasets/npy/train/y/regression/train_y_characteristic_length.npy"
+X_TEST = "../../../datasets/npy/test/x/test_x.npy"
+Y_TEST= "../../../datasets/npy/test/y/regression/test_y_characteristic_length.npy"
 
 # Load files
 print("\nLoading files...")
@@ -27,7 +27,7 @@ print("     Finished!")
 
 # Create the Estimator
 classifier = tf.estimator.Estimator(model_fn=cm_lm.cnn_lstm_model_fn, 
-                                    model_dir="/Users/parkerkingfournier/Documents/University/U4(2017-18)/Summer/ResearchProject/python/scripts/models/logs/regressors/cnn_lstm_regressor")
+                                    model_dir="/Users/parkerkingfournier/Documents/Development/workspace/projects/Ecological-Inference/python/models/Regressors/logs/cnn_lstm_characteristic_length")
 
 # Set up logging for predictions
 tensors_to_log = {"probabilities": "prediction_tensor/BiasAdd"}
@@ -49,7 +49,10 @@ eval_input_fn = tf.estimator.inputs.numpy_input_fn(
 
 # Train the model
 print("\nTraining model...\n")
-classifier.train( input_fn=train_input_fn, steps=2, hooks=[logging_hook])
+classifier.train( 
+    input_fn=train_input_fn, 
+    steps=200, 
+    hooks=[logging_hook])
 print("     Finished!\n")
 
 # Evaluate the model and print results

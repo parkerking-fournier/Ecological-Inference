@@ -48,12 +48,12 @@ eval_input_fn = tf.estimator.inputs.numpy_input_fn(
     shuffle=False)
 
 # Train the Model
-print("\nTraining model...\n")
-classifier.train( 
-    input_fn=train_input_fn, 
-    steps=200,
-    hooks=[logging_hook])
-print("     Finished!\n")
+#print("\nTraining model...\n")
+#classifier.train( 
+#    input_fn=train_input_fn, 
+#    steps=200,
+#    hooks=[logging_hook])
+#print("     Finished!\n")
 
 # Evaluate the model and print results
 print("\nTesting model...\n")

@@ -37,3 +37,42 @@ tritrophic no omnivory (B4) (7)
 	-	L/S:					1.2		
 	-	Connectance:			0.24		
 	-	Characteristic Length:	1.4
+
+
+Characteristic Length values:
+	Normalized 				Raw
+
+	1.0						2.0				xx
+	0.33333					1.33333			xx
+	0.0						1.0				xx
+	0.3						1.3				xx
+	0.66666					1.66666			xx
+	0.16666					1.16666			xx
+	0.2						1.2				xx
+	0.4						1.4				xx
+
+
+Connectance values:
+	Normalized 				Raw
+
+	0.0						0.16			xx
+	0.358968441701			0.22222			xx
+	1.0						0.33333			xx
+	0.692321006173			0.28			x
+	0.158656897248			0.1875			x
+	0.879824612012			0.3125			x
+	0.923094674898			0.32			x
+	0.461547337449			0.24			x
+
+
+normalized L/S values:
+	Normalized 				Raw
+
+	0.142863265262			0.8				xx
+	0.0						0.66666			xx
+	0.357147448947			1.0				xx
+	0.785715816316			1.4				xx
+	0.0892922193413			0.75			xx
+	0.625002678552			1.25			xx
+	1.0						1.6				xx
+	0.571431632631			1.2				xx

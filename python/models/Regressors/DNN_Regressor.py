@@ -6,10 +6,10 @@ import tensorflow as tf
 import numpy as np
 
 # Training and test sets
-X_TRAINING = "../../../../datasets/npy/train/x/train_x.npy"
-Y_TRAINING = "../../../../datasets/npy/train/y/regression/train_y_links_per_species.npy"
-X_TEST = "../../../../datasets/npy/test/x/test_x.npy"
-Y_TEST= "../../../../datasets/npy/test/y/regression/test_y_links_per_species.npy"
+X_TRAINING = "../../../datasets/npy/train/x/train_x.npy"
+Y_TRAINING = "../../../datasets/npy/train/y/regression/train_y_characteristic_length.npy"
+X_TEST = "../../../datasets/npy/test/x/test_x.npy"
+Y_TEST= "../../../datasets/npy/test/y/regression/test_y_characteristic_length.npy"
 
 # Load files
 print("Loading files...")
@@ -27,7 +27,7 @@ feature_columns = [tf.feature_column.numeric_column("x", shape=[149769])]
 # Build 5 layer DNN with 50, 50, 50, 50, 50 units respectively.
 classifier = tf.estimator.DNNRegressor( feature_columns=feature_columns,
                                         hidden_units=[50, 50, 50, 50, 50],
-                                        model_dir="/Users/parkerkingfournier/Documents/Development/workspace/projects/Ecological-Inference/python/scripts/models/Regressors/logs/dnn_links_per_species",
+                                        model_dir="/Users/parkerkingfournier/Documents/Development/workspace/projects/Ecological-Inference/python/scripts/models/Regressors/logs/dnn_characteristic_length",
                                         dropout=0.5)
 
 # Define the training and eval inputs

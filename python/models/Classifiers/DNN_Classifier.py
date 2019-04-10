@@ -6,10 +6,10 @@ import tensorflow as tf
 import numpy as np
 
 # Training and test sets
-X_TRAINING = "../../../../datasets/npy/train_x.npy"
-Y_TRAINING = "../../../../datasets/npy/train_y_num_species.npy"
-X_TEST = "../../../../datasets/npy/test_x.npy"
-Y_TEST = "../../../../datasets/npy/test_y_num_species.npy"
+X_TRAINING = "../../../datasets/npy/train/x/train_x.npy"
+Y_TRAINING = "../../../datasets/npy/train/y/classification/train_y.npy"
+X_TEST = "../../../datasets/npy/test/x/test_x.npy"
+Y_TEST = "../../../datasets/npy/test/y/classification/test_y.npy"
 
 # Load files
 print("Loading files...")

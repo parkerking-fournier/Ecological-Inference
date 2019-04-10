@@ -11,23 +11,25 @@ tf.logging.set_verbosity(tf.logging.INFO)
 
 # Training and test sets
 X_TRAINING = "../../../datasets/npy/train/x/train_x.npy"
-Y_TRAINING = "../../../datasets/npy/train/y/regression/train_y_links_per_species.npy"
+Y_TRAINING = "../../../datasets/npy/train/y/regression/train_y_connectance_normalized.npy"
 X_TEST = "../../../datasets/npy/test/x/test_x.npy"
-Y_TEST= "../../../datasets/npy/test/y/regression/test_y_links_per_species.npy"
+Y_TEST= "../../../datasets/npy/test/y/regression/test_y_connectance_normalized.npy"
+
+# Declare and open results file
+RESULTS_FILE = "/Users/parkerkingfournier/Documents/Development/workspace/projects/Ecological-Inference/python/models/Regressors/logs/cnn_lstm_connectance_normalized/results.txt"
+file = open(RESULTS_FILE, "w+")
 
 # Load files
 print("\nLoading files...")
 train_x = np.load(X_TRAINING)
 train_y = np.load(Y_TRAINING)
-train_y = train_y.astype(int)
 test_x  = np.load(X_TEST)
 test_y  = np.load(Y_TEST)
-test_y = test_y.astype(int)
 print("     Finished!")
 
 # Create the Estimator
 classifier = tf.estimator.Estimator(model_fn=cm_lm.cnn_lstm_model_fn, 
-                                    model_dir="/Users/parkerkingfournier/Documents/Development/workspace/projects/Ecological-Inference/python/models/Regressors/logs/cnn_lstm_links_per_species")
+                                    model_dir="/Users/parkerkingfournier/Documents/Development/workspace/projects/Ecological-Inference/python/models/Regressors/logs/cnn_lstm_connectance_normalized")
 
 # Set up logging for predictions
 tensors_to_log = {"probabilities": "prediction_tensor/BiasAdd"}
@@ -47,17 +49,27 @@ eval_input_fn = tf.estimator.inputs.numpy_input_fn(
     num_epochs=1,
     shuffle=False)
 
-# Train the model
-#print("\nTraining model...\n")
-#classifier.train( 
-#    input_fn=train_input_fn, 
-#    steps=200, 
-#    hooks=[logging_hook])
-#print("     Finished!\n")
+# Training related variables
+training_steps      = 50
+training_sessions   = 40
 
-# Evaluate the model and print results
-print("\nTesting model...\n")
-eval_results = classifier.evaluate(input_fn=eval_input_fn)
-print("     Finished!")
+for training_session in xrange(0,training_sessions):
+    # Train the Model
+    print("\nTraining model at step ", training_session*training_steps, " out of ", training_sessions*training_steps,"...")
+    classifier.train( 
+        input_fn=train_input_fn, 
+        steps=training_steps,
+        hooks=[logging_hook])
+    print("     Finished!\n")
 
-print("\nTest error:  ", eval_results, '\n')
+    # Evaluate the model and print results to a file
+    print("\nTesting model at step ", (training_session+1)*training_steps, " out of ", training_sessions*training_steps,"...")
+    eval_result = classifier.evaluate(input_fn=eval_input_fn)
+    print("     Finished!")
+
+    file.write("Global Step:    " + str(eval_result["global_step"]) + "\n")
+    file.write("    Loss:           " + str(eval_result["loss"]) + "\n")
+    file.write("    Accuracy:       " + str(eval_result["accuracy"]) + "\n")
+
+# Close the file
+file.close()

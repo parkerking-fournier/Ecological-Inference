@@ -5,15 +5,15 @@ from __future__ import print_function
 # Imports
 import numpy as np
 import tensorflow as tf
-import CNN_LSTM_model as cm_lm
+import CNN_LSTM_Classifier_model as cm_lm
 
 tf.logging.set_verbosity(tf.logging.INFO)
 
 # Training and test sets
-X_TRAINING = "../../../../datasets/npy/train_x.npy"
-Y_TRAINING = "../../../../datasets/npy/train_y_num_species.npy"
-X_TEST = "../../../../datasets/npy/test_x.npy"
-Y_TEST = "../../../../datasets/npy/test_y_num_species.npy"
+X_TRAINING = "../../../datasets/npy/train/x/train_x.npy"
+Y_TRAINING = "../../../datasets/npy/train/y/classification/train_y.npy"
+X_TEST = "../../../datasets/npy/test/x/test_x.npy"
+Y_TEST = "../../../datasets/npy/test/y/classification/test_y.npy"
 
 # Load files
 print("\nLoading files...")
@@ -27,7 +27,7 @@ print("     Finished!")
 
 # Create the Estimator
 classifier = tf.estimator.Estimator(model_fn=cm_lm.cnn_lstm_model_fn, 
-                                    model_dir="/Users/parkerkingfournier/Documents/University/U4(2017-18)/Summer/ResearchProject/python/scripts/models/logs/classifiers/cnn_lstm_classifier")
+                                    model_dir="/Users/parkerkingfournier/Documents/University/U4(2017-18)/Summer/ResearchProject/python/scripts/models/logs/classifiers/tmp")
 
 # Set up logging for predictions
 tensors_to_log = {"probabilities": "softmax_tensor"}

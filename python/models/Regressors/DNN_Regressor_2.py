@@ -30,8 +30,11 @@ feature_columns = [tf.feature_column.numeric_column("x", shape=[149769])]
 # Build 5 layer DNN with 50, 50, 50, 50, 50 units respectively.
 classifier = tf.estimator.DNNRegressor( feature_columns=feature_columns,
                                         hidden_units=[50, 50, 50, 50, 50],
+                                        optimizer=tf.train.GradientDescentOptimizer(learning_rate=0.0000000000001),
                                         model_dir="/Users/parkerkingfournier/Documents/Development/workspace/projects/Ecological-Inference/python/models/Regressors/logs/dnn_characteristic_length_2_normalized",
                                         dropout=0.5)
+
+
 
 # Define the training and eval inputs
 train_input_fn = tf.estimator.inputs.numpy_input_fn(
@@ -48,13 +51,13 @@ test_input_fn = tf.estimator.inputs.numpy_input_fn(
     shuffle=False)
 
 # Training related variables
-training_steps      = 50
+training_steps      = 25
 training_sessions   = 40
 
 for training_session in xrange(0,training_sessions):
     # Train model.
     print("\nTraining model at step ", training_session*training_steps, " out of ", training_sessions*training_steps,"...")
-    classifier.train(input_fn=train_input_fn, steps=50)
+    classifier.train(input_fn=train_input_fn, steps=25)
     print("     Finished!")
     
     # Evaluate the model and print results to a file

@@ -1,0 +1,27 @@
+tensorboard --logdir=
+
+
+
+DNN_cl:/Users/parkerkingfournier/Documents/Development/workspace/projects/Ecological-Inference/python/models/Regressors/logs/dnn_characteristic_length_normalized
+
+DNN_c:/Users/parkerkingfournier/Documents/Development/workspace/projects/Ecological-Inference/python/models/Regressors/logs/dnn_connectance_normalized
+
+DNN_lps:/Users/parkerkingfournier/Documents/Development/workspace/projects/Ecological-Inference/python/models/Regressors/logs/dnn_links_per_species_normalized
+
+
+
+
+CNN_cl:/Users/parkerkingfournier/Documents/Development/workspace/projects/Ecological-Inference/python/models/Regressors/logs/cnn_characteristic_length_normalized
+
+CNN_c:/Users/parkerkingfournier/Documents/Development/workspace/projects/Ecological-Inference/python/models/Regressors/logs/cnn_connectance_normalized
+
+CNN_lps:/Users/parkerkingfournier/Documents/Development/workspace/projects/Ecological-Inference/python/models/Regressors/logs/cnn_links_per_species_normalized
+
+
+
+
+CNN_LSTM_cl:/Users/parkerkingfournier/Documents/Development/workspace/projects/Ecological-Inference/python/models/Regressors/logs/cnn_lstm_characteristic_length_normalized
+
+CNN_LSTM_c:/Users/parkerkingfournier/Documents/Development/workspace/projects/Ecological-Inference/python/models/Regressors/logs/cnn_lstm_connectance_normalized
+
+CNN_LSTM_lps:/Users/parkerkingfournier/Documents/Development/workspace/projects/Ecological-Inference/python/models/Regressors/logs/cnn_lstm_links_per_species_normalized

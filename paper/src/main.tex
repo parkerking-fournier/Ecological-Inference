@@ -430,14 +430,111 @@ where \textit{x\textsubscript{t}} represents the population of species \textit{x
 
     To calculate evenness of a system more concretely one can use the interquartile range (IQR). The IQR of the Characteristic Path Lengths of the topologies is 0.35, the IQR of the Connectances is 0.65 and is 0.59 for the Links per Species’ values. These values partially explain the difference in performance when regressing different topologic values. The lower IQR  for the Characteristic Path Length confirms that those values are much more unevenly grouped, and the similar IQR values for Connectance and Links per Species align with the roughly similar loss trends when training and evaluating on Connectance and Links per Species. 
     
-    However, following this logic one would expect to see higher performance when training and evaluating on Connectance than when training and evaluating on Links per Species, which is contrary to the results presented. Looking at how each metric groups each corresponding topology along the number line may offer a hint as to why Links per Species proved to be a better metric to use. The Characteristic Path Length groups the topologies B2, B3, A4, A2 and B4 closely together. The Connectance has less distinct groups, but groups the three chain topologies A1, B2 and A2 together, as well as the topologies B2 and B3. The Links per Species similarly groups the chain topologies together, but groups them more closely together than Connectance. It also groups together topologies B2 and B4. 
+    However, following this logic one would expect to see higher performance when training and evaluating on Connectance than when training and evaluating on Links per Species, which is contrary to the results presented. It may be that groups or unevenness are not intrinsically bad, but that there are better groupings than others. Looking at how each metric groups each corresponding topology along the number line may offer a hint as to why Links per Species proved to be a better metric to use. The Characteristic Path Length groups the topologies B2, B3, A4, A2 and B4 closely together. The Connectance has less distinct groups, but groups the three chain topologies A1, B2 and A2 together, as well as the topologies B2 and B3. The Links per Species similarly groups the chain topologies together, but groups them more closely together than Connectance. It also groups together topologies B2 and B4. 
     
-    \begin{figure}
-    {\label{ref_label1}\includegraphics[width=0.5\textwidth]{characteristic_length_plot.png}}
-    {\label{ref_label2}\includegraphics[width=0.5\textwidth]{connectance_plot.png}}
-    {\label{ref_label3}\includegraphics[width=0.5\textwidth]{links_plot.png}}
-    \caption{\label{ref_label_overall}The values of the topologic metrics plotted on a number line. Characteristic path length is on top, then Connectance, then Links per Species. THIS IS TEMPORARY - TO BE REDONE. }
-\end{figure} 
+\begin{figure}
+    \centering
+        
+    \begin{tikzpicture}[scale=8]
+        \path [draw=black, fill=black] (0,0.4) circle (0.3pt);
+        \draw[shift={(0,0.4)},color=black] (0pt,0pt) -- (0pt,1.5pt) node[above]
+        {A3};
+        \path [draw=black, fill=black] (0.16666,0.4) circle (0.3pt);
+        \draw[shift={(0.16666,0.45)},color=black] (0pt,-1pt) -- (0pt,1.5pt) node[above]
+        {B2};
+        \path [draw=black, fill=black] (0.2,0.4) circle (0.3pt);
+        \draw[shift={(0.2,0.4)},color=black] (0pt,0pt) -- (0pt,1.5pt) node[above]
+        {B3};
+        \path [draw=black, fill=black] (0.3,0.4) circle (0.3pt);
+        \draw[shift={(0.3,0.45)},color=black] (0pt,-1pt) -- (0pt,1.5pt) node[above]
+        {A4};
+        \path [draw=black, fill=black] (0.33333,0.4) circle (0.3pt);
+        \draw[shift={(0.33333,0.4)},color=black] (0pt,0pt) -- (0pt,1.5pt) node[above]
+        {A2};
+        \path [draw=black, fill=black] (0.4,0.4) circle (0.3pt);
+        \draw[shift={(0.4,0.4)},color=black] (0pt,0pt) -- (0pt,1.5pt) node[above]
+        {B4};
+        \path [draw=black, fill=black] (0.66666,0.4) circle (0.3pt);
+        \draw[shift={(0.66666,0.4)},color=black] (0pt,0pt) -- (0pt,1.5pt) node[above]
+        {B1};
+        \path [draw=black, fill=black] (1,0.4) circle (0.3pt);
+        \draw[shift={(1,0.4)},color=black] (0pt,0pt) -- (0pt,1.5pt) node[above]
+        {A1};
+        \draw[latex-latex] (-0.05,0.4) -- (1.05,0.4) ;
+        \foreach \x in  {0, 0.2, 0.4, 0.6, 0.8, 1}
+        \draw[shift={(\x,0.4)},color=black] (0pt,0.5pt) -- (0pt,-0.5pt);
+        \foreach \x in {0, 0.2, 0.4, 0.6, 0.8, 1}
+        \draw[shift={(\x,0.4)},color=black] (0pt,0pt) -- (0pt,-0.5pt) node[below] 
+        {$\x$};
+        
+        \path [draw=black, fill=black] (0,0) circle (0.3pt);
+        \draw[shift={(0,0)},color=black] (0pt,0pt) -- (0pt,1.5pt) node[above] 
+        {A1};
+        \path [draw=black, fill=black] (0.158656897248,0) circle (0.3pt);
+        \draw[shift={(0.158656897248,0)},color=black] (0pt,0pt) -- (0pt,1.5pt) node[above]
+        {B1};
+        \path [draw=black, fill=black] (0.358968441701,0) circle (0.3pt);
+        \draw[shift={(0.358968441701,0)},color=black] (0pt,0pt) -- (0pt,1.5pt) node[above]
+        {A2};
+        \path [draw=black, fill=black] (0.461547337449,0) circle (0.3pt);
+        \draw[shift={(0.461547337449,0)},color=black] (0pt,0pt) -- (0pt,1.5pt) node[above]
+        {B4};
+        \path [draw=black, fill=black] (0.692321006173,0) circle (0.3pt);
+        \draw[shift={(0.692321006173,0)},color=black] (0pt,0pt) -- (0pt,1.5pt) node[above]
+        {A4};
+        \path [draw=black, fill=black] (0.879824612012,0) circle (0.3pt);
+        \draw[shift={(0.879824612012,0.05)},color=black] (0pt,-1pt) -- (0pt,1.5pt) node[above]
+        {B2};
+        \path [draw=black, fill=black] (0.923094674898,0) circle (0.3pt);
+        \draw[shift={(0.923094674898,0)},color=black] (0pt,0pt) -- (0pt,1.5pt) node[above]
+        {B3};
+        \path [draw=black, fill=black] (1,0) circle (0.3pt);
+        \path [draw=black, fill=black] (0.923094674898,0) circle (0.3pt);
+        \draw[shift={(1,0)},color=black] (0pt,0pt) -- (0pt,1.5pt) node[above]
+        {A3};
+        \draw[latex-latex] (-0.05,0) -- (1.05,0) ;
+        \foreach \x in  {0, 0.2, 0.4, 0.6, 0.8, 1}
+        \draw[shift={(\x,0)},color=black] (0pt,0.5pt) -- (0pt,-0.5pt);
+        \foreach \x in {0, 0.2, 0.4, 0.6, 0.8, 1}
+        \draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-0.5pt) node[below] 
+        {$\x$};
+        
+        \path [draw=black, fill=black] (0,-0.4) circle (0.3pt);
+        \draw[shift={(0,-0.4)},color=black] (0pt,0pt) -- (0pt,1.5pt) node[above] 
+        {A2};
+        \path [draw=black, fill=black] (0.0892922193413,-0.4) circle (0.3pt);
+        \draw[shift={(0.0892922193413,-0.35)},color=black] (0pt,-1pt) -- (0pt,1.5pt) node[above] 
+        {B1};
+        \path [draw=black, fill=black] (0.142863265262,-0.4) circle (0.3pt);
+        \draw[shift={(0.142863265262,-0.4)},color=black] (0pt,0pt) -- (0pt,1.5pt) node[above] 
+        {A1};
+        \path [draw=black, fill=black] (0.357147448947,-0.4) circle (0.3pt);
+        \draw[shift={(0.357147448947,-0.4)},color=black] (0pt,0pt) -- (0pt,1.5pt) node[above] 
+        {A3};
+        \path [draw=black, fill=black] (0.571431632631,-0.4) circle (0.3pt);
+        \draw[shift={(0.571431632631,-0.35)},color=black] (0pt,-1pt) -- (0pt,1.5pt) node[above] 
+        {B4};
+        \path [draw=black, fill=black] (0.625002678552,-0.4) circle (0.3pt);
+        \draw[shift={(0.625002678552,-0.4)},color=black] (0pt,0pt) -- (0pt,1.5pt) node[above] 
+        {B2};
+        \path [draw=black, fill=black] (0.785715816316,-0.4) circle (0.3pt);
+        \draw[shift={(0.785715816316,-0.4)},color=black] (0pt,0pt) -- (0pt,1.5pt) node[above] 
+        {A4};
+        \path [draw=black, fill=black] (1,-0.4) circle (0.3pt);
+        \draw[shift={(1,-0.4)},color=black] (0pt,0pt) -- (0pt,1.5pt) node[above] 
+        {B3};
+        \draw[latex-latex] (-0.05,-0.4) -- (1.05,-0.4) ;
+        \foreach \x in  {0, 0.2, 0.4, 0.6, 0.8, 1}
+        \draw[shift={(\x,-0.4)},color=black] (0pt,0.5pt) -- (0pt,-0.5pt);
+        \foreach \x in {0, 0.2, 0.4, 0.6, 0.8, 1}
+        \draw[shift={(\x,-0.4)},color=black] (0pt,0pt) -- (0pt,-0.5pt) node[below] 
+        {$\x$};
+        
+    \end{tikzpicture}
+    
+    \caption{The values of topologic metrics and their associated topologies plotted on a number line. The top numberline shows the values for the Characteristic Path Length, the middle number line the values for Connectance and the bottom number line the values for Links per Species.}
+
+\end{figure}
 
     The facts that certain topologies a) result in different performances and b) group the topologies differently implies that certain groupings of topologies are easier to regress than others. Furthermore, this implies that the groupings of topologies that are ‘easier’ to regress group the topologies such that each group contains topologies that generate time series that are similar to each other. For example, the fact that the ‘easier’ metrics Connectance and Links per Species metrics grouped the chain topologies together implies that the time series generated by these chains are similar – if the regressors saw a time series that corresponded to a chain topology, it was regressed into the area of the number line reserved for chain topologies. This contrasts a regressor trained and evaluated using the Characteristic Path Length which, finding a time series corresponding to a chain topology, would not have a convenient region to regress into. 
 
@@ -464,7 +561,7 @@ where \textit{x\textsubscript{t}} represents the population of species \textit{x
     
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{ACKNOWLEDGMENTS}
-		Many thanks are owed to those individuals who took time to aid in the completion of this report. Frederic Guichard, the supervisor of this study, provided endless insight into the world of chaos and dynamical systems which I had not had any previous training in. Professor Guichard aided in narrowing the scope of the project to a manageable size, and pointed research in a helpful direction when roadblocks were met. I would like to thank also, and perhaps strangely, my trumpet teacher Russel DeVuyst for leading by example and teaching lessons that could be carried far outside of the practice room, showing that age does not need to diminish curiosity and enthusiasm, and for understanding that my interests spanned many disciplines. To my family are owed the greatest thanks, for their support and love, for their ability to listen to rants filled with mathematical terminology and endless requests to look at strange attractors. Lastly, I would like to the 5b's Bakery in Concrete, Washington for providing me with a space to camp out for many hours on end to complete the report, and for their endless coffee. 
+		Many thanks are owed to those individuals who took time to aid in the completion of this report. Frederic Guichard, the supervisor of this study, provided endless insight into the world of chaos and dynamical systems which I had not had any previous training in. Professor Guichard aided in narrowing the scope of the project to a manageable size, and pointed research in a helpful direction when roadblocks were met. He encouraged me to pursue publication and has been an academic inspiration even after my time at University has ended. I would like to thank also, and perhaps strangely, my trumpet teacher Russel DeVuyst for leading by example and teaching lessons that could be carried far outside of the practice room, showing that age does not need to diminish curiosity and enthusiasm, and for understanding that my interests spanned many disciplines. To my family are owed the greatest thanks, for their support and love, for their ability to listen to rants filled with mathematical terminology and endless requests to look at strange attractors. Lastly, I would like to thank 5b's Bakery in Concrete, Washington for providing me with a space to camp out for many hours on end to complete the report, and for their endless coffee. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{thebibliography}{99}

@@ -51,6 +51,9 @@ Characteristic Length values:
 	0.2						1.2				xx
 	0.4						1.4				xx
 
+	interquartile: 0.35
+
+
 
 Connectance values:
 	Normalized 				Raw
@@ -64,6 +67,8 @@ Connectance values:
 	0.923094674898			0.32			x
 	0.461547337449			0.24			x
 
+	interquartile: 0.64264697398
+
 
 normalized L/S values:
 	Normalized 				Raw
@@ -76,3 +81,6 @@ normalized L/S values:
 	0.625002678552			1.25			xx
 	1.0						1.6				xx
 	0.571431632631			1.2				xx
+
+	interquartile: 0.58928150513
+

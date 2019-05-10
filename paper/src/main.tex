@@ -36,7 +36,7 @@ Inferring Network Topology from Chaotic Time Series
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-Signiﬁcant interest has been shown in the ability of ecologic networks to generate chaotic dynamics: it has been shown that simple ecologic models can generate dynamics that neither reach an equilibrium nor a stable limit cycle but oscillate around a strange attractor. As a result, the dynamics of ecologic networks has proved challenging to analyze using traditional ecologic techniques. Recently, machine learning has been shown to be quite effective in the areas of classification, regression and forecasting of time series, both chaotic and not. In this paper three different machine learning models are used to classify and regress time series resulting from ecologic models that have been found to exhibit chaotic behavior. Specifically, a Deep Neural Network (DNN), Convolutional Neural Network (CNN) and a Convolutional - Long Short-Term Memory Network (CNN-LSTM) are used to classify which ecologic network generated a given time series, and to regress three different topologic metrics (the connectance, characteristic path length, and links per species) of the ecologic network that generated that time series. In comparing these machine learning models, a positive correlation between model complexity and model performance was found, with the CNN-LSTM performing on average best, the CNN second best, and the DNN worst.
+Signiﬁcant interest has been shown in the ability of ecologic networks to generate chaotic dynamics: it has been shown that simple ecologic models can generate dynamics that neither reach an equilibrium nor a stable limit cycle but oscillate around a strange attractor. As a result, the dynamics of ecologic networks has proved challenging to analyze using traditional ecologic techniques. Recently, machine learning has been shown to be quite effective in the areas of classification, regression and forecasting of time series, both chaotic and not. In this paper three different machine learning models are used to classify and regress time series resulting from ecologic models that have been found to exhibit chaotic behavior. Specifically, a Deep Neural Network (DNN), Convolutional Neural Network (CNN) and a Convolutional - Long Short-Term Memory Network (CNN-LSTM) are used to classify which ecologic network generated a given time series, and to regress three different topologic metrics (the connectance, average path length, and links per species) of the ecologic network that generated that time series. In comparing these machine learning models, a positive correlation between model complexity and model performance was found, with the CNN-LSTM performing on average best, the CNN second best, and the DNN worst.
 \end{abstract}
 \begin{keywords}
 chaos theory, chaotic attractors, convolutional neural networks, deep neural networks, dynamical systems, ecology, food webs, long short-term memory, machine learning, network topology, sequence classiﬁcation, regression, time series 
@@ -221,7 +221,7 @@ chaos theory, chaotic attractors, convolutional neural networks, deep neural net
 The food web topologies and differential equations shown were found to exhibit chaotic dynamics for certain parameter settings. Figure 1 shows different visualizations of one phase space trajectory of the most chaotic network topology, the chain of length 5. The three phase space trajectories in Figure 1 have nearly identical initial conditions, and over the course of 220,000 time steps diverge showing the food chains sensitivity to initial conditions and chaotic tendencies.
 
 \subsection{Datasets}
-For the task of regression, 3 datasets were created. For these datasets, the X component of the dataset \textit{D} remained unchanged, but the labels were changed to be topologic metrics. Datasets \textit{D\textsubscript{C}},  \textit{D\textsubscript{CL}}, and  \textit{D\textsubscript{LPS}} were respectively labelled with the topologic metrics connectance, characteristic length, and links per species of the 8 different food webs. In order to compare the performance of machine learning models trained on different topologic metrics, each labelling was scaled so that it laid within a [0, 1] range. To understand why this is necessary imagine two topologic metrics for a given food web, one with value 10 and the other with value 100. If a machine learning model were to estimate the first metric at a value of 9, the second with a value of 90, the model would be 10\% off the mark for both metrics. However, measuring the error using an error function such as Mean Squared Error (MSE) would show an MSE of (10 - 9)\textsuperscript{2} = 1 for the first metric, and a value of (100 – 10)\textsuperscript{2} = 100 for the second. We eliminate this problem by normalized all labels to be in the range [0, 1]. 
+For the task of regression, 3 datasets were created. For these datasets, the X component of the dataset \textit{D} remained unchanged, but the labels were changed to be topologic metrics. Datasets \textit{D\textsubscript{C}},  \textit{D\textsubscript{CL}}, and  \textit{D\textsubscript{LPS}} were respectively labelled with the topologic metrics connectance, average path length, and links per species of the 8 different food webs. In order to compare the performance of machine learning models trained on different topologic metrics, each labelling was scaled so that it laid within a [0, 1] range. To understand why this is necessary imagine two topologic metrics for a given food web, one with value 10 and the other with value 100. If a machine learning model were to estimate the first metric at a value of 9, the second with a value of 90, the model would be 10\% off the mark for both metrics. However, measuring the error using an error function such as Mean Squared Error (MSE) would show an MSE of (10 - 9)\textsuperscript{2} = 1 for the first metric, and a value of (100 – 10)\textsuperscript{2} = 100 for the second. We eliminate this problem by normalized all labels to be in the range [0, 1]. 
 
 For the task of classification, a total of 5 datasets were created. Of these five datasets four are subsets of the original data set, denoted \textit{D}. The relationship of these datasets to one another is shown in Figure 2. \textit{D} was created by holding all parameter values constant except for the mortality rates \textit{d\textsubscript{C\textsubscript{i}}}, \textit{d\textsubscript{Y}}, \textit{d\textsubscript{Y}}, and \textit{d\textsubscript{Z}}. The n-dimensional space of mortality rates was traversed (Table 2), evaluating the differential equations (1) through (5) 200,000 time steps for each parameter combination, and omitting the first 50,232 time steps to remove initial transient behaviour of the system. Following Fussman and Heber (Fussman \& Heber, 2002), the resulting time series of length 149769, denoted \textit{x}, was recorded only if every species in the network "survived". This was carried out by only recording time series for which all species populations were greater than the threshold value $\varepsilon$ = 10\textsuperscript{-9} at time \textit{t} = 200,000. 
 
@@ -330,10 +330,63 @@ In the field of ecology, the exact number of species in an environment is often 
 \section{METHODS}
 \subsection{Dataset Creation}
 	All datasets constructed using the ecological models above implemented in python. To approximate the integration of equations (1) through (5) the following form was used:
-\begin{equation}x_{t+1} = x_{t} + f(x_{t})dt\end{equation}
-where \textit{x\textsubscript{t}} represents the population of species \textit{x} at time \textit{t}, \textit{f($\cdot$)} is an ecological model (Equations (1) through (5)), and \textit{dt} is approximated as 0.01. 
+	
+    \begin{equation}x_{t+1} = x_{t} + f(x_{t})dt\end{equation}
+    
+    where \textit{x\textsubscript{t}} represents the population of species \textit{x} at time \textit{t}, \textit{f($\cdot$)} is an ecological model (Equations (1) through (5)), and \textit{dt} is approximated as 0.01. 
 	
     After the datasets were created, every fourth entry was withheld from training to be used in a validation set. This resulted in training and test sets that possessed identical class distributions which will be a focus of later discussion.
+    
+    For the three datasets used for regression three topologic metrics were used: the Average Path Length, the Connectance and the Links per Species of a given network.
+    
+    \begin{equation} l_G = \frac{1}{n(n -1)}\sum_{i \neq j}d(v_i, v_j) \end{equation}
+    
+    \begin{equation} c = \frac{l}{n(n -1)} \end{equation}
+    
+    \begin{equation} lps = \frac{l}{n} \end{equation}
+    
+    These were calculated using the standard equations (6) through (8), where \textit{n} is the number of species, \textit{l} is the number of links and \textit{d(v\textsubscript{i}, v\textsubscript{j})} is a distance function determined by taking the minimum number of links that connect species \textit{v\textsubscript{i}} and \textit{v\textsubscript{j}}. Before training and evaluating using these topologic metrics, they were each normalized to the [0,1] range. The raw and normalized values of these metrics are presented in Table 3.
+    
+    \begin{table}
+    \caption{Raw and Normalized Values of the Topologic Metrics Average Path Length, Connectance, and Links per Species for the Studied Network Topologies}
+    \setlength{\tabcolsep}{5mm} % separator between columns
+    \def\arraystretch{1.25} % vertical stretch factor
+    \centering
+        
+      %\begin{tabular}{|c|c c c|c c c|}
+      %  \hline
+      %     & Raw & Normalized
+      %\end{tabular}
+      \begin{tabular}{|c|c|c|c|}
+        \hline
+        
+        & \textbf{l\textsubscript{G}} & \textbf{c} & \textbf{lps} \\ \hline
+        
+        &\multicolumn{3}{|c|}{\textbf{Raw}} \\ \hline
+        
+        \textbf{A1} & 2.0               & 0.16              & 0.8               \\ \hline
+        \textbf{A2} & 1.\overline{3}    & 0.\overline{2}    & 0.\overline{6}    \\ \hline
+        \textbf{A3} & 1.0               & 0.\overline{3}    & 1.0               \\ \hline
+        \textbf{A4} & 1.3               & 0.28              & 1.4               \\ \hline
+        \textbf{B1} & 1.\overline{6}	& 0.1875            & 0.75              \\ \hline
+        \textbf{B2} & 1.1\overline{6}   & 0.3125            & 1.25              \\ \hline
+        \textbf{B3} & 1.2               & 0.32              & 1.6               \\ \hline
+        \textbf{B4} & 1.4               & 0.24              & 1.2               \\ \hline
+        
+        &\multicolumn{3}{|c|}{\textbf{Normalized}} \\ \hline
+
+        \textbf{A1} & 1.0               & 0.0               & 0.142863265262  \\ \hline
+        \textbf{A2} & 0.\overline{3}    & 0.358968441701    & 0.0              \\ \hline
+        \textbf{A3} & 0.0               & 1.0               & 0.357147448947   \\ \hline
+        \textbf{A4} & 0.3               & 0.692321006173    & 0.785715816316   \\ \hline
+        \textbf{B1} & 0.\overline{6}    & 0.158656897248    & 0.0892922193413  \\ \hline
+        \textbf{B2} & 0.1\overline{6}   & 0.879824612012    & 0.625002678552   \\ \hline
+        \textbf{B3} & 0.2               & 0.923094674898    & 1.0              \\ \hline
+        \textbf{B4} & 0.4               & 0.461547337449    & 0.571431632631   \\ \hline     
+        
+      \end{tabular}
+    \end{table}
+    
 
 \subsection{Classification Models}
 	The classification models used were implemented in Python, using existing TensorFlow packages for DNNs, CNNs, and LSTMs. For all the models parameters were initialized randomly and a Rectified Linear Unit (ReLu) activation function was used. For the networks containing convolutional layers same padding was used, and filters were initialized according to a random normal distribution with $\mu$ = 0 and $\sigma$ = 0.05. A learning rate of 0.001 was used for all algorithms. 
@@ -345,12 +398,31 @@ where \textit{x\textsubscript{t}} represents the population of species \textit{x
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{RESULTS}
-	After training each algorithm and recording the results it became clear that a positive correlation between algorithm complexity and accuracy was present. For the majority of datasets the CNN-LSTM performed significantly better than the more simple classification models (Table 3).
+	After training each algorithm and recording the results it became clear that a positive correlation between algorithm complexity and accuracy was present. For the majority of datasets the CNN-LSTM performed significantly better than the more simple classification models (Tables 4 and 5).
+	
+    To aid in comparing the effectiveness of each topologic metric, a column has been added to Table 4 that shows the average MSE over all regressors trained on a given dataset. This shows that some metrics were "easier" to regress than others, with the Links per Species being easiest, the Average Path Length the hardest, and the Connectance in the middle. 
+    
+    The rest of Table 4 shows the lowest Mean Squared Error (MSE) achieved by each regressor during evaluation. In this table one can clearly see that the CNN-LSTM performed the best, consistently having the lowest MSE. This trend is shown again in Table 5, which shows the CNN-LSTM obtaining the highest accuracy on all but one dataset. 
 	
     Before discussing the implications of the results, it is important to draw attention to certain patterns within the results. Firstly, it should be noted that on data set \textit{D} there is a very slight negative correlation between algorithm complexity and accuracy. Despite this, we see that the difference in accuracies on data set \textit{D} are considerably smaller than those in the other datasets. Second, one should attend to the results pertaining to data set \textit{D\textsubscript{5}} where all algorithms performed identically. Both of these patterns seem to conflict with the stronger correlation present when the algorithms were training on datasets \textit{D\textsubscript{N}}, \textit{D\textsubscript{3}} or \textit{D\textsubscript{4}} and will comprise much of the following discussion section. 
+    
+\begin{table}
+\caption{MSE of Regression Models on Datasets}
+\setlength{\tabcolsep}{5mm} % separator between columns
+\def\arraystretch{1.25} % vertical stretch factor
+\centering
+
+  \begin{tabular}{|c|c|c|c||c|}
+	\hline
+    & \textbf{DNN} & \textbf{CNN} & \textbf{CNN-LSTM} & \textbf{Mean}\\ \hline
+    \textbf{\textit{D\textsubscript{l\textsubscript{G}}}} & 0.260	& 0.111 & \textbf{0.055} & 0.142\\ \hline
+    \textbf{\textit{D\textsubscript{c}}} & 0.185	& 0.079 & \textbf{0.056} & 0.107 \\ \hline
+    \textbf{\textit{D\textsubscript{lps}}} & 0.180 & 0.044 & \textbf{0.038} & \textbf{0.087} \\ \hline
+  \end{tabular}
+\end{table}
 
 \begin{table}
-\caption{Accuracy of Classification Models on datasets}
+\caption{Accuracy of Classification Models on Datasets}
 \setlength{\tabcolsep}{5mm} % separator between columns
 \def\arraystretch{1.25} % vertical stretch factor
 \centering
@@ -371,7 +443,7 @@ where \textit{x\textsubscript{t}} represents the population of species \textit{x
 	
     The results presented in the previous section are thought provoking as well as enlightening. In both the tasks of regression and classification, a trend is seen where the complexity of the model directly correlates with its performance. This will allow further research to focus efforts on models that are more successful at interpreting chaotic population data. 
 
-    In the task of regression, we see that not all topologic metrics are created equal: it appears that the Characteristic Path Length was the ‘hardest’ metric to regress, followed by Connectance, and finally Links per Species.
+    In the task of regression, we see that not all topologic metrics are created equal: it appears that the Average Path Length was the ‘hardest’ metric to regress, followed by Connectance, and finally Links per Species.
     
     In this discussion, we will use modern deep learning concepts and observations about the time series data to understand the difference in performance between the models. Following that we will discuss the topologic metrics used in regression to try to understand why certain metrics seemed ‘easier’ to regress. Finally, we will use the first two discussion sections to explore the ecological relevance of these findings. It is hoped that by building a multidisciplinary understanding, a larger audience will find the results relevant and the arguments will be stronger. 
 
@@ -410,9 +482,11 @@ where \textit{x\textsubscript{t}} represents the population of species \textit{x
     
     The increased performance in the CNN-LSTM can again be explained by known properties of LSTM cells and observations about the data. LSTMs are known to excel at problems that feature long term dependencies, or events which occur at unknown intervals (Lipton & Berkowitz, 2015). Because of this, one can intuit that random shifts of similarly shaped spikes in a time series may cause a CNN to underperform in comparison to a CNN-LSTM. Since the CNN-LSTM is comprised of convolutional layers followed by an LSTM cell one can think of the classifier as first extracting features (spike shapes) using convolutions, then addressing the random spacing between them by passing the resulting features to an LSTM cell. This understanding aligns with the theory that the CNN layers learn time series features in the form of spike shapes. The CNN learns spike shapes better than the DNN, but gets somewhat confused by the random intervals between them and therefor is aided by the addition of an LSTM cell. These observations about the data and the properties of different machine learning models provide an explanation for the increased accuracy in the CNN and CNN- LSTM. 
 
-    In the task of classification, special attention should be paid to the datasets \textit{D} and \textit{D\textsubscript{5}} which do not show the more complex classifiers performing better. Unsurprisingly, \textit{D} remained the least classifiable of the datasets. This could be explained by the fact that this set contained the greatest number of classes. Considering Table 3, it is seen that all classifiers perform significantly better than a baseline estimator, but reach approximately the same accuracy when trained and evaluated on dataset \textit{D}. Because of the minimal difference between performances, it is hypothesized that \textit{D} is not completely classifiable. This apparent similarity between chaotic dynamics of different topologies may be explained by looking strictly at the topologies themselves. Consider topology A1, the five-species chain. Topologies B1 (the four-species chain), and A2 (the three species chain) are sub-graphs of A1: it may be possible that the chaotic dynamics created from A1 may also be created from B1 or A2. If this were true then those dynamics stem from multiple topologies would be unclassifiable. Similarly, one can see that topology A2 is a sub-graph of every other topology, potentially contributing to the classifiability of the data set. 
+    In the task of classification, special attention should be paid to the datasets \textit{D} and \textit{D\textsubscript{5}} which do not show the more complex classifiers performing better. Unsurprisingly, \textit{D} remained the least classifiable of the datasets. This could be explained by the fact that this set contained the greatest number of classes. Considering Table 5, it is seen that all classifiers perform significantly better than a baseline estimator, but reach approximately the same accuracy when trained and evaluated on dataset \textit{D}. Because of the minimal difference between performances, it is hypothesized that \textit{D} is not completely classifiable. This hypothesized un-classifiability implies that some time series generated by different network topologies are similar enough to be indistinguishable. 
+    
+    This apparent similarity between chaotic dynamics of different topologies may be explained by looking strictly at the topologies themselves. Consider topology A1, the five-species chain. Topologies B1 (the four-species chain), and A2 (the three species chain) are sub-graphs of A1: it may be possible that the chaotic dynamics created from A1 may also be created from B1 or A2. If this were true, dynamics that can be generated multiple topologies would be unclassifiable. Similarly, one can see that topology A2 is a sub-graph of every other topology, potentially contributing to the classifiability of the data set. 
 
-    The data set \textit{D\textsubscript{5}} presents a different phenomenon. The accuracy of each algorithm was identical; furthermore, the accuracy of each algorithm was exactly that of a baseline classifier. Essentially,  each algorithm simply learned to guess the most common class in the data set \textit{D\textsubscript{5}}. Table 4 shows the class distribution of each data set. From this one can see that the most common class in \textit{D\textsubscript{5}} comprised 80\% of the data points. While this may be underwhelming in regards to the learning capabilities of the algorithms, it may be important in regards to the ecological models. 
+    The data set \textit{D\textsubscript{5}} presents a different phenomenon. The accuracy of each algorithm was identical; furthermore, the accuracy of each algorithm was exactly that of a baseline classifier. Essentially,  each algorithm simply learned to guess the most common class in the data set \textit{D\textsubscript{5}}. Table 6 shows the class distribution of each data set. From this one can see that the most common class in \textit{D\textsubscript{5}} comprised 80\% of the data points. While this may be underwhelming in regards to the learning capabilities of the algorithms, it may be important in regards to the ecological models. 
 
     Fussman and Heber showed that topology A1 possessed the highest percentage of chaotic parameters of all topologies they tested. Unsurprisingly, the class representing 80\% of data set \textit{D\textsubscript{5}} was none other than topology A1. The non-uniformity in the distribution of classes in \textit{D\textsubscript{5}} matches the findings of Fussman and Heber and may be more useful than any fancy Machine Learning Algorithm. Because a 5-species chain is so chaotic, it may be useful to know that chaotic dynamics found in a five-species system most likely come from a chain of five species. Furthermore, the inability of all algorithms to classify chaotic time series generated from topologies of five species with more success than a baseline classifier may indicate that the time series themselves are nearly identical. 
     
@@ -424,13 +498,13 @@ where \textit{x\textsubscript{t}} represents the population of species \textit{x
 
 \subsection{Topologic Metrics}
 
-    Not only was a trend in machine learning models performance shown, but a trend in which metrics resulted in the best performance was also seen. As stated above, all models performed the poorest (i.e. had the highest loss values) when regressing in terms of the Characteristic Path Length of a given topology. The results of the models on the other two metrics, the Connectance and Links per Species, were much more similar but Links per Species had the lowest loss in most scenarios. 
+    Not only was a trend in machine learning models performance shown, but a trend in which metrics resulted in the best performance was also seen. As stated above, all models performed the poorest (i.e. had the highest loss values) when regressing in terms of the Average Path Length of a given topology. The results of the models on the other two metrics, the Connectance and Links per Species, were much more similar but Links per Species achieved the lowest MSE. 
 
-    One way to gain insight into the usability of the three metrics is to simply visualize them. Figure 7 shows that even after normalization to the 0-1 range, the different metrics have different qualities. The most notable feature of the regression metrics is the ‘evenness’ of each metric. The Characteristic Path Length is the less ‘even’ of all the metrics. This ‘unevenness’ of the Characteristic Path Length may be one reason why the metric is harder to regress. To understand this, imagine that you are tasked with guessing the Characteristic Path Length associated with a time series. It seems risky to guess a value higher than 0.4 since the majority (6 of 8) of labels fall within 0 to 0.4. 
+    One way to gain insight into the usability of the three metrics is to simply visualize them. Figure 7 shows that even after normalization to the 0-1 range, the different metrics have different qualities. The most notable feature of the regression metrics is the ‘evenness’ of each metric. The Average Path Length is the less ‘even’ of all the metrics. This ‘unevenness’ of the Average Path Length may be one reason why the metric is harder to regress. To understand this, imagine that you are tasked with guessing the Average Path Length associated with a time series. It seems risky to guess a value higher than 0.4 since the majority (6 of 8) of labels fall within 0 to 0.4: as a result you may be tempted regress most evaluation examples into the [0, 0.4] range, resulting in a higher overall MSE. 
 
-    To calculate evenness of a system more concretely one can use the interquartile range (IQR). The IQR of the Characteristic Path Lengths of the topologies is 0.35, the IQR of the Connectances is 0.65 and is 0.59 for the Links per Species’ values. These values partially explain the difference in performance when regressing different topologic values. The lower IQR  for the Characteristic Path Length confirms that those values are much more unevenly grouped, and the similar IQR values for Connectance and Links per Species align with the roughly similar loss trends when training and evaluating on Connectance and Links per Species. 
+    To calculate evenness of a system more concretely one can use the interquartile range (IQR). The IQR of the Average Path Lengths of the topologies is 0.35, the IQR of the Connectances is 0.65 and is 0.59 for the Links per Species’ values. These values partially explain the difference in performance when regressing different topologic values. The lower IQR  for the Average Path Length confirms that those values are much more unevenly grouped, and the similar IQR values for Connectance and Links per Species align with the roughly similar loss trends when training and evaluating on Connectance and Links per Species. 
     
-    However, following this logic one would expect to see higher performance when training and evaluating on Connectance than when training and evaluating on Links per Species, which is contrary to the results presented. It may be that groups or unevenness are not intrinsically bad, but that there are better groupings than others. Looking at how each metric groups each corresponding topology along the number line may offer a hint as to why Links per Species proved to be a better metric to use. The Characteristic Path Length groups the topologies B2, B3, A4, A2 and B4 closely together. The Connectance has less distinct groups, but groups the three chain topologies A1, B2 and A2 together, as well as the topologies B2 and B3. The Links per Species similarly groups the chain topologies together, but groups them more closely together than Connectance. It also groups together topologies B2 and B4. 
+    However, following this logic one would expect to see higher performance when training and evaluating on Connectance than when training and evaluating on Links per Species, which is contrary to the results presented. It may be that groups or unevenness are not intrinsically bad, but that there are better groupings than others. Looking at how each metric groups each corresponding topology along the number line may offer a hint as to why Links per Species proved to be a better metric to use. The Average Path Length groups the topologies B2, B3, A4, A2 and B4 closely together. The Connectance has less distinct groups, but groups the three chain topologies A1, B2 and A2 together, as well as the topologies B2 and B3. The Links per Species similarly groups the chain topologies together, but groups them more closely together than Connectance. It also groups together topologies B2 and B4. 
     
 \begin{figure}
     \centering
@@ -532,13 +606,13 @@ where \textit{x\textsubscript{t}} represents the population of species \textit{x
         
     \end{tikzpicture}
     
-    \caption{The values of topologic metrics and their associated topologies plotted on a number line. The top numberline shows the values for the Characteristic Path Length, the middle number line the values for Connectance and the bottom number line the values for Links per Species.}
+    \caption{The values of topologic metrics and their associated topologies plotted on a number line. The top numberline shows the values for the Average Path Length, the middle number line the values for Connectance and the bottom number line the values for Links per Species.}
 
 \end{figure}
 
-    The facts that certain topologies a) result in different performances and b) group the topologies differently implies that certain groupings of topologies are easier to regress than others. Furthermore, this implies that the groupings of topologies that are ‘easier’ to regress group the topologies such that each group contains topologies that generate time series that are similar to each other. For example, the fact that the ‘easier’ metrics Connectance and Links per Species metrics grouped the chain topologies together implies that the time series generated by these chains are similar – if the regressors saw a time series that corresponded to a chain topology, it was regressed into the area of the number line reserved for chain topologies. This contrasts a regressor trained and evaluated using the Characteristic Path Length which, finding a time series corresponding to a chain topology, would not have a convenient region to regress into. 
+    The facts that certain topologies a) result in different performances and b) group the topologies differently implies that certain groupings of topologies are easier to regress than others. Furthermore, this implies that the groupings of topologies that are ‘easier’ to regress group the topologies such that each group contains topologies that generate time series that are similar to each other. For example, the fact that the ‘easier’ metrics Connectance and Links per Species metrics grouped the chain topologies together implies that the time series generated by these chains are similar – if the regressors saw a time series that corresponded to a chain topology, it was regressed into the area of the number line reserved for chain topologies. Even if the regressed value is incorrect, it is significantly closer to the true value because it can be placed conveniently in the 'chain region'.  This contrasts a regressor trained and evaluated using the Average Path Length which, finding a time series corresponding to a chain topology, would not have a convenient region to regress into. 
 
-    This realization is interesting in the fact that it also implies that certain topologic metrics may reflect the generating properties of a system better than others. As previously mentioned, future work in comparing similarities in time series generated by these topologies would be immensely helpful.
+    This realization is interesting in the fact that it also implies that certain topologic metrics may reflect the generating properties of a system better than others. Additionally, the fact that certain groupings are "better" and the apparent accuracy limit when classifying on dataset \textit{D} strongly imply that certain time series are unclassifiable and can be generated from more than one topology. As previously mentioned, future work in comparing similarities in time series generated by these topologies would be immensely helpful.
 
 \subsection{Ecologic Relevance}
 
@@ -553,11 +627,7 @@ where \textit{x\textsubscript{t}} represents the population of species \textit{x
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{CONCLUSIONS}
-	The presence of chaos in the natural and unnatural world has sparked the interest of many of the greatest minds of our time. Its seemingly random, yet deterministic nature has been found throughout our world and others and has been shown to help explain many difficult phenomena. In the natural world the presence of chaos in ecological systems, particular in their cycles of populations, has allowed for further in depth analysis of the world around us. 
-
-	The precise aspect of chaos that draws many to it makes it puzzling to those who ponder it. It's difficulty to characterize and predict has challenged many researchers. Using different Machine Learning algorithms, this report has strove to gain an insight into chaos, showing that for the specific task of topological inference in ecologic networks, complex models such as a CNN-LSTM can better capture the essence of the data. This finding enlightens future researchers by giving a sturdier understanding of the characteristics and tools needed to analyze chaotic populations. 
-    
-    It is suggested that future research focus on the development of (1) a higher quality dataset with more even class distributions, and (2) classification models more capable of understanding the data. Also of interest would be (3) the determination of whether or not chaotic time series produced by the models used above are indeed classifiable. 
+    TODO
     
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{ACKNOWLEDGMENTS}

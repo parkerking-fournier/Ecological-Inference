@@ -22,7 +22,7 @@
 \usepackage{tikz} % assumes tikz package installed
 \usepackage{subfig} % assumes subfig package installed
 \title{\LARGE \bf
-Inferring Network Topology from Chaotic Time Series
+Learning Ecological Networks and Parameters from Partial Data of Chaotic Systems
 }
 
 \author{Parker King-Fournier \\
@@ -476,9 +476,10 @@ In the field of ecology, the exact number of species in an environment is often 
         \end{tabular}
     \end{table}
 
-    If one see’s that a CNN is outperforming a DNN it is logical to ask “what aspects of the data are easier for the CNN?”. To answer this question, it is important to look at the data the CNN and DNN were trained and evaluated on.  Figure 6 shows the time series of one species’ population generated from the ecological models explained above. At first glance, this data appears to be somewhat cyclic, with similarly shaped spikes occurring at regular intervals. However, the astute observer will notice that the peak of each spike is slightly different and that the spacing between spikes is not uniform. There are two theories for why the CNN outperformed the DNN that relate the data used and the known properties of the CNN. Firstly, one can imagine that the CNN is learning features that correspond to unique spike shapes, disregarding the frequency at which these spikes appear, and using this distinct spike shape to classify time series. Second, the small irregularities in spike shape and location can be understood as a shift applied to some original spike form. Both theories provide an explanation for why the CNN would outperform the DNN using the data supplied to it. 
+    If one see’s that a CNN is outperforming a DNN it is logical to ask  \textit{what aspects of the data are easier for the CNN to analyze?} To answer this question, it is important to look at the data the CNN and DNN were trained and evaluated on.  Figure 6 shows the time series of one species’ population generated from the ecological models explained above. At first glance, this data appears to be somewhat cyclic, with similarly shaped spikes occurring at regular intervals. However, the astute observer will notice that the peak of each spike is slightly different and that the spacing between spikes is not uniform. There are two theories for why the CNN outperformed the DNN that relate the data used and the known properties of the CNN. Firstly, one can imagine that the CNN is learning features that correspond to unique spike shapes, disregarding the frequency at which these spikes appear, and using this distinct spike shape to classify time series. Second, the small irregularities in spike shape and location can be understood as a shift applied to some original spike form. Both theories provide an explanation for why the CNN would outperform the DNN using the data supplied to it. 
 
-    Likewise, the addition of an LSTM cell to a CNN to create the LSTM-CNN was inspired by known properties of LSTM networks. Because the CNN-LSTM is comprised partially of a CNN any change in performance cause by adding an LSTM cell would logically be caused by that LSTM cell. We see that the CNN-LSTM outperforms the CNN: the logical conclusion is that the LSTM cell helped the CNN. Again, the question “what aspects of the data are easier for the CNN-LSTM?” should be asked. 
+    Likewise, the addition of an LSTM cell to a CNN to create the LSTM-CNN was inspired by known properties of LSTM networks. Because the CNN-LSTM is comprised partially of a CNN any change in performance cause by adding an LSTM cell would logically be caused by that LSTM cell. We see that the CNN-LSTM outperforms the CNN: the logical conclusion is that the LSTM cell helped the CNN. Again, the question 
+    \textit{what aspects of the data are easier for the CNN-LSTM? to analyze?”} should be asked. 
     
     The increased performance in the CNN-LSTM can again be explained by known properties of LSTM cells and observations about the data. LSTMs are known to excel at problems that feature long term dependencies, or events which occur at unknown intervals (Lipton & Berkowitz, 2015). Because of this, one can intuit that random shifts of similarly shaped spikes in a time series may cause a CNN to underperform in comparison to a CNN-LSTM. Since the CNN-LSTM is comprised of convolutional layers followed by an LSTM cell one can think of the classifier as first extracting features (spike shapes) using convolutions, then addressing the random spacing between them by passing the resulting features to an LSTM cell. This understanding aligns with the theory that the CNN layers learn time series features in the form of spike shapes. The CNN learns spike shapes better than the DNN, but gets somewhat confused by the random intervals between them and therefor is aided by the addition of an LSTM cell. These observations about the data and the properties of different machine learning models provide an explanation for the increased accuracy in the CNN and CNN- LSTM. 
 
@@ -494,13 +495,13 @@ In the field of ecology, the exact number of species in an environment is often 
 
     To test the similarity of time series generated by topologies, the visualization of attractors from these topologies would be extremely helpful. If attractors look similar it would provide evidence that \textit{D} is indeed impossible to classify perfectly. 
     
-    Lastly, it is recommended that research be conducted using classification algorithms which are adept at learning from chaotic time series data. Further research into architectures using LSTM cells seems to be a logical direction to start in. Architectures such as Liquid State Machines (LSMs) or Echo State Networks (ESNs) have been shown to excel at predicting and classifying chaotic data and could be the focus of further experimentation (Li et al., 2012). 
+    Lastly, it is recommended that research be conducted to determine regression and/or classification algorithms which are adept at learning from chaotic time series data. Further research into architectures using LSTM cells seems to be a logical direction to start in. Architectures such as Liquid State Machines (LSMs) or Echo State Networks (ESNs) have been shown to excel at predicting and classifying chaotic data and could be the focus of further experimentation (Li et al., 2012). 
 
 \subsection{Topologic Metrics}
 
     Not only was a trend in machine learning models performance shown, but a trend in which metrics resulted in the best performance was also seen. As stated above, all models performed the poorest (i.e. had the highest loss values) when regressing in terms of the Average Path Length of a given topology. The results of the models on the other two metrics, the Connectance and Links per Species, were much more similar but Links per Species achieved the lowest MSE. 
 
-    One way to gain insight into the usability of the three metrics is to simply visualize them. Figure 7 shows that even after normalization to the 0-1 range, the different metrics have different qualities. The most notable feature of the regression metrics is the ‘evenness’ of each metric. The Average Path Length is the less ‘even’ of all the metrics. This ‘unevenness’ of the Average Path Length may be one reason why the metric is harder to regress. To understand this, imagine that you are tasked with guessing the Average Path Length associated with a time series. It seems risky to guess a value higher than 0.4 since the majority (6 of 8) of labels fall within 0 to 0.4: as a result you may be tempted regress most evaluation examples into the [0, 0.4] range, resulting in a higher overall MSE. 
+    One way to gain insight into the usability of the three metrics is to simply visualize them. Figure 7 shows that even after normalization to the [0-1] range, the different metrics have different qualities. The most notable feature of the regression metrics is the ‘evenness’ of each metric. The Average Path Length is the less ‘even’ of all the metrics. This ‘unevenness’ of the Average Path Length may be one reason why the metric is harder to regress. To understand this, imagine that you are tasked with guessing the Average Path Length associated with a time series. It seems risky to guess a value higher than 0.4 since the majority (6 of 8) of labels fall within 0 to 0.4: as a result you may be tempted regress most evaluation examples into the [0, 0.4] range, resulting in a higher overall MSE. 
 
     To calculate evenness of a system more concretely one can use the interquartile range (IQR). The IQR of the Average Path Lengths of the topologies is 0.35, the IQR of the Connectances is 0.65 and is 0.59 for the Links per Species’ values. These values partially explain the difference in performance when regressing different topologic values. The lower IQR  for the Average Path Length confirms that those values are much more unevenly grouped, and the similar IQR values for Connectance and Links per Species align with the roughly similar loss trends when training and evaluating on Connectance and Links per Species. 
     
@@ -665,6 +666,18 @@ In the field of ecology, the exact number of species in an environment is often 
 \bibitem{c14} William M. Schaffer and Mark Kot. "Do Strange Attractors Govern Ecological Systems?". BioScience, Volume 35, Issue 6, 342–350, https://doi.org/10.2307/1309902. (1985).
 
 \bibitem{c15} Zachary C. Lipton, John Berkowitz, and Charles Elkan. "A critical review of recurrent neural networks for sequence learning". arXiv preprint arXiv:1506.00019. (2015).
-\end{thebibliography}
 
+\bibitem{c16}
+https://www.nature.com/articles/s41467-017-02288-4
+
+\bibitem{c17}
+https://arxiv.org/pdf/1506.04214.pdf
+
+\bititem{c18}
+https://arxiv.org/pdf/1902.11136.pdf
+
+\bititem{c19}
+http://ilp11.doc.ic.ac.uk/short\_papers/ilp2011\_submission\_35.pdf
+
+\end{thebibliography}
 \end{document}

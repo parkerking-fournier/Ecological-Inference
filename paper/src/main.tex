@@ -68,7 +68,11 @@ chaos theory, chaotic attractors, convolutional neural networks, deep neural net
   
 	The prospect of inferring network topology from data is an important problem in ecology. Previous work includes the inference of topology in spatial networks (Barthelemy et al., 2010), as well as the inference of topology in networks describing species interaction (Vera-Licona \&  Laubenbacher, 2008). 
   
-	In \textit{"Inferring topology from dynamics in spatial networks"}, Gilarranz et al. attempted to discern the degree to which the dynamical patterns reveal underlying dispersal pathways. Their attempt was unsuccessful but their apparent failure proved to be helpful by showing that further constraints must be made in order to make the inference more manageable for our current technologies. This was a main factor in the decision to restrict the number of classes present in the datasets created for this report. 
+    There has been some previous work in inferring network topologies from the dynamics generated. In \textit{"Model-free inference of direct network interactions from nonlinear collective dynamics"} Casadiego et al. attempted infer network interactions (a direct result of a networks topology) with no previous knowledge of the underlying dynamical system (Casadiego et al., 2017). This differs only slightly from the task of this paper in the fact that Casadiego et al. attempted to infer interactions of a network given \textit{all} dynamics generated from the network, whereas this paper attempts a similar inference given only \textit{one} generated time series. 
+    
+    Ayed et al. tackled the problem of of only observing partial data in their paper \textit{"Learning Dynamical Systems from Partial Observations"} (Ayed et al., 2019). They showed that a neural network is able to learn and predict the state of a highly complex, nonlinear system reasonably well. Their work is expanded by applying this idea to the tasks of classification and regression, as well as comparing the efficacy of different types of neural networks.
+  
+	Additionally, in \textit{"Inferring topology from dynamics in spatial networks"}, Gilarranz et al. attempted to discern the degree to which the dynamical patterns reveal underlying dispersal pathways. Their attempt was unsuccessful but their apparent failure proved to be helpful by showing that further constraints must be made in order to make the inference more manageable for our current technologies. This was a main factor in the decision to restrict the number of classes present in the datasets created for this report. 
 
 	The classification of population data into different generating topologies falls under the larger task of sequence classification. In the Machine Learning community sequence classification has been used in a variety of applications, from medical diagnosis to human-robot differentiation (Dietterich, 2002). Of particular interest is the recent work on the performance of Deep Learning methods, specifically Long Short Term Memory (LSTMs) Networks, in sequence classification. In 2005 Alex Graves and Jurgen Schmidhuber found that LSTM Networks outperformed traditional Recurrent Neural Networks (RNNs) and Multilayer Perceptrons (MLPs) in speech processing. While speech processing may seem a long way from ecological networks, the performance of the networks in the task of sequence classification inspired some of the architectures used below. 
 
@@ -659,25 +663,21 @@ In the field of ecology, the exact number of species in an environment is often 
 
 \bibitem{c12} Mohammad Norouzi, Mani Ranjbar, and Greg Mori. "Stacks of convolutional Restricted Boltzmann Machines for shift-invariant feature learning". IEEE Conference on Computer Vision and Pattern Recognition. (2009).
 
-\bibitem{c12} Paola Vera-Licona and Reinhard Laubenbacher. "Inference of ecological interaction networks". Annales Botanici Fennici, 45: 459-464. (2008).
+\bibitem{c13} Paola Vera-Licona and Reinhard Laubenbacher. "Inference of ecological interaction networks". Annales Botanici Fennici, 45: 459-464. (2008).
 
-\bibitem{c13} Athanasios Voulodimos, Nikolaos Doulamis, Anastasios Doulamis, and Eftychios Protopapadakis, “Deep Learning for Computer Vision: A Brief Review". Computational Intelligence and Neuroscience, vol. 2018, Article ID 7068349. https://doi.org/10.1155/2018/7068349. (2018).
+\bibitem{c14} Athanasios Voulodimos, Nikolaos Doulamis, Anastasios Doulamis, and Eftychios Protopapadakis, “Deep Learning for Computer Vision: A Brief Review". Computational Intelligence and Neuroscience, vol. 2018, Article ID 7068349. https://doi.org/10.1155/2018/7068349. (2018).
 
-\bibitem{c14} William M. Schaffer and Mark Kot. "Do Strange Attractors Govern Ecological Systems?". BioScience, Volume 35, Issue 6, 342–350, https://doi.org/10.2307/1309902. (1985).
+\bibitem{c15} William M. Schaffer and Mark Kot. "Do Strange Attractors Govern Ecological Systems?". BioScience, Volume 35, Issue 6, 342–350, https://doi.org/10.2307/1309902. (1985).
 
-\bibitem{c15} Zachary C. Lipton, John Berkowitz, and Charles Elkan. "A critical review of recurrent neural networks for sequence learning". arXiv preprint arXiv:1506.00019. (2015).
+\bibitem{c16} Zachary C. Lipton, John Berkowitz, and Charles Elkan. "A critical review of recurrent neural networks for sequence learning". arXiv preprint arXiv:1506.00019. (2015).
 
-\bibitem{c16}
-https://www.nature.com/articles/s41467-017-02288-4
+\bibitem{c17} Jose Casadiego, Mor Nitzan, Sarah Hallerberg and Marc Timme. "Model-free inference of direct network interactions from nonlinear collective dynamics". Nature Communications, Volume 8, Article 2192, https://doi.org/10.1038/s41467-017-02288-4. (2017).
 
-\bibitem{c17}
-https://arxiv.org/pdf/1506.04214.pdf
+\bibitem{c18} Ibrahim Ayed, Emmanuel de Bezenac, Arthur Pajot, Julien Brajard and Patrick Gallinari. "Learning Dynamical Systems from Partial Observations". CoRR, Volume 1902.11136, http://arxiv.org/abs/1902.11136. (2019). 
 
-\bititem{c18}
-https://arxiv.org/pdf/1902.11136.pdf
+\bibitem{c19} https://arxiv.org/pdf/1506.04214.pdf
 
-\bititem{c19}
-http://ilp11.doc.ic.ac.uk/short\_papers/ilp2011\_submission\_35.pdf
+\bibitem{c20} http://ilp11.doc.ic.ac.uk/short\_papers/ilp2011\_submission\_35.pdf
 
 \end{thebibliography}
 \end{document}
